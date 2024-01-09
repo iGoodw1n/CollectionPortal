@@ -13,6 +13,8 @@ public static class WebApplicationExtensions
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
+        services.AddScoped<AppDbContextInitialiser>();
+
         return services;
     }
 }

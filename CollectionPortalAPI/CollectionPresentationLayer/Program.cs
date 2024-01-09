@@ -1,4 +1,5 @@
 using CollectionDataLayer.Extensions;
+using GameStore.Data.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDataServices();
 
 var app = builder.Build();
+
+await app.InitialiseDatabaseAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
