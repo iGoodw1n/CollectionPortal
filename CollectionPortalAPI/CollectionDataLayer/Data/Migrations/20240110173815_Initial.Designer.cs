@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CollectionDataLayer.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240109231056_Initial")]
+    [Migration("20240110173815_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -35,7 +35,8 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -54,97 +55,113 @@ namespace CollectionDataLayer.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("CustomCheckBox1Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomCheckBox1State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomCheckBox2Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomCheckBox2State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomCheckBox3Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomCheckBox3State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomDate1Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomDate1State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomDate2Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomDate2State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomDate3Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomDate3State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomInt1Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomInt1State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomInt2Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomInt2State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomInt3Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomInt3State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomString1Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomString1State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomString2Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomString2State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomString3Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomString3State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomText1Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomText1State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomText2Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomText2State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("CustomText3Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<bool>("CustomText3State")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -183,14 +200,14 @@ namespace CollectionDataLayer.Data.Migrations
                     b.Property<bool?>("CustomCheckBox3")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("CustomDate1")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("CustomDate1")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("CustomDate2")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("CustomDate2")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime?>("CustomDate3")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("CustomDate3")
+                        .HasColumnType("date");
 
                     b.Property<int?>("CustomInt1")
                         .HasColumnType("integer");
@@ -202,26 +219,33 @@ namespace CollectionDataLayer.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("CustomString1")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("CustomString2")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("CustomString3")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("CustomText1")
-                        .HasColumnType("text");
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)");
 
                     b.Property<string>("CustomText2")
-                        .HasColumnType("text");
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)");
 
                     b.Property<string>("CustomText3")
-                        .HasColumnType("text");
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -241,7 +265,8 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 

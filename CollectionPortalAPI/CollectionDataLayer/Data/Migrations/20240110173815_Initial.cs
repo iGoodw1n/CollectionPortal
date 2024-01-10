@@ -18,7 +18,7 @@ namespace CollectionDataLayer.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,22 +31,22 @@ namespace CollectionDataLayer.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    CustomString1 = table.Column<string>(type: "text", nullable: true),
-                    CustomString2 = table.Column<string>(type: "text", nullable: true),
-                    CustomString3 = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CustomString1 = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    CustomString2 = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    CustomString3 = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomInt1 = table.Column<int>(type: "integer", nullable: true),
                     CustomInt2 = table.Column<int>(type: "integer", nullable: true),
                     CustomInt3 = table.Column<int>(type: "integer", nullable: true),
-                    CustomText1 = table.Column<string>(type: "text", nullable: true),
-                    CustomText2 = table.Column<string>(type: "text", nullable: true),
-                    CustomText3 = table.Column<string>(type: "text", nullable: true),
+                    CustomText1 = table.Column<string>(type: "character varying(10000)", maxLength: 10000, nullable: true),
+                    CustomText2 = table.Column<string>(type: "character varying(10000)", maxLength: 10000, nullable: true),
+                    CustomText3 = table.Column<string>(type: "character varying(10000)", maxLength: 10000, nullable: true),
                     CustomCheckBox1 = table.Column<bool>(type: "boolean", nullable: true),
                     CustomCheckBox2 = table.Column<bool>(type: "boolean", nullable: true),
                     CustomCheckBox3 = table.Column<bool>(type: "boolean", nullable: true),
-                    CustomDate1 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CustomDate2 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CustomDate3 = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CustomDate1 = table.Column<DateOnly>(type: "date", nullable: true),
+                    CustomDate2 = table.Column<DateOnly>(type: "date", nullable: true),
+                    CustomDate3 = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,7 @@ namespace CollectionDataLayer.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ItemId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -92,40 +92,40 @@ namespace CollectionDataLayer.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     ImageUrl = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false),
                     CustomString1State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomString1Name = table.Column<string>(type: "text", nullable: true),
+                    CustomString1Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomString2State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomString2Name = table.Column<string>(type: "text", nullable: true),
+                    CustomString2Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomString3State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomString3Name = table.Column<string>(type: "text", nullable: true),
+                    CustomString3Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomInt1State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomInt1Name = table.Column<string>(type: "text", nullable: true),
+                    CustomInt1Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomInt2State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomInt2Name = table.Column<string>(type: "text", nullable: true),
+                    CustomInt2Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomInt3State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomInt3Name = table.Column<string>(type: "text", nullable: true),
+                    CustomInt3Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomDate1State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomDate1Name = table.Column<string>(type: "text", nullable: true),
+                    CustomDate1Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomDate2State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomDate2Name = table.Column<string>(type: "text", nullable: true),
+                    CustomDate2Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomDate3State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomDate3Name = table.Column<string>(type: "text", nullable: true),
+                    CustomDate3Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomText1State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomText1Name = table.Column<string>(type: "text", nullable: true),
+                    CustomText1Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomText2State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomText2Name = table.Column<string>(type: "text", nullable: true),
+                    CustomText2Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomText3State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomText3Name = table.Column<string>(type: "text", nullable: true),
+                    CustomText3Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomCheckBox1State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomCheckBox1Name = table.Column<string>(type: "text", nullable: true),
+                    CustomCheckBox1Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomCheckBox2State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomCheckBox2Name = table.Column<string>(type: "text", nullable: true),
+                    CustomCheckBox2Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CustomCheckBox3State = table.Column<bool>(type: "boolean", nullable: false),
-                    CustomCheckBox3Name = table.Column<string>(type: "text", nullable: true)
+                    CustomCheckBox3Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
