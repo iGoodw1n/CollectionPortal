@@ -43,6 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -50,5 +52,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapGroup("/account").MapIdentityApi<AppUser>();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
