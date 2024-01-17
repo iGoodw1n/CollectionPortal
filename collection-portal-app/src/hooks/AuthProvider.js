@@ -1,31 +1,27 @@
 import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../api.config.js";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("site") || "");
+  const [isAuth, setIsAuth] = useState(false);
+
   const navigate = useNavigate();
+
   const loginAction = async (data) => {
     try {
-      const response = await fetch("/account/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.status === 401) return 'Password or email is incorrect'
-      const res = await response.json();
-      console.log(res)
-      if (res) {
-        setToken(res.accessToken);
-        localStorage.setItem("site", JSON.stringify(res));
+      const response = await instance.post("/account/login", data);
+      console.log(response)
+      if (response) {
+        if (response.status === 401) return 'Password or email is incorrect'
+        setIsAuth(true);
+        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
         navigate("/");
-        return;
       }
-      throw new Error(res.message);
+
+      throw new Error(response?.statusText);
     } catch (err) {
       console.error(err);
     }
@@ -50,15 +46,27 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const checkAuth = async () => {
+    const refreshToken = localStorage.getItem('refreshToken')
+    if (!refreshToken) return
+    const response = await instance.post("/account/refresh", { refreshToken })
+    if (response && response.status) {
+      setIsAuth(true);
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      navigate("/");
+    }
+  }
+
   const logOut = () => {
-    setUser(null);
-    setToken("");
-    localStorage.removeItem("site");
+    setIsAuth(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction, logOut, signUpAction }}>
+    <AuthContext.Provider value={{ isAuth, loginAction, logOut, signUpAction, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

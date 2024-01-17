@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/AuthProvider';
 
 const Header = () => {
-  const user = useAuth();
+  const auth = useAuth()
+  useEffect(() => {
+    auth.checkAuth()
+    // eslint-disable-next-line
+  }, [])
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -16,7 +20,7 @@ const Header = () => {
             <Link className="nav-link active" aria-current="page" to="#">Home</Link>
             <Link className="nav-link" to="/dashboard">Collection</Link>
             <Link className="nav-link" to="#">Items</Link>
-            {user.token ? <Link className="nav-link" to="/mypage">My Collections</Link> : <Link className="nav-link" to="/login">Login</Link>}
+            {auth.isAuth ? <Link className="nav-link" to="/mypage">My Collections</Link> : <Link className="nav-link" to="/login">Login</Link>}
           </div>
         </div>
       </div>
