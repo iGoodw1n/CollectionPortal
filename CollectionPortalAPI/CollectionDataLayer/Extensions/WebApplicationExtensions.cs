@@ -1,6 +1,7 @@
 ﻿using CollectionDataLayer.Consts;
 using CollectionDataLayer.Data;
 using CollectionDataLayer.Entities;
+using CollectionDataLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,10 @@ public static class WebApplicationExtensions
             .AddRoles<IdentityRole<int>>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddApiEndpoints();
+
+        services.AddScoped<ICollectionRepository, CollectionRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<AppDbContextInitialiser>();
 

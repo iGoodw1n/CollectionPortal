@@ -1,5 +1,6 @@
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Extensions;
+using CollectionLogicLayer.Extensions;
 using GameStore.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
@@ -24,6 +25,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 builder.Services.AddDataServices();
+builder.Services.AddLogicServices();
 
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();

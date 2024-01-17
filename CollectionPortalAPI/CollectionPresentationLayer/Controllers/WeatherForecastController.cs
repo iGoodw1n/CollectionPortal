@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CollectionPortalAPI.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
+    [Authorize]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
@@ -30,6 +31,12 @@ namespace CollectionPortalAPI.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("data")]
+        public IEnumerable<object> GetData()
+        {
+            return User.Claims.Select(claim => new { claim.Type, claim.Value, claim.ValueType, claim.Issuer }).ToList();
         }
     }
 }
