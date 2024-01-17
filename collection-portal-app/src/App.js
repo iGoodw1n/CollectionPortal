@@ -7,20 +7,21 @@ import Home from './pages/Home';
 import Header from './components/Header';
 import Signup from './pages/Signup';
 import AuthProvider from './hooks/AuthProvider';
-
+import AddCollection from './pages/AddCollection';
 
 function App() {
+
   return (
     <Router>
       <AuthProvider>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="collection" element={<Dashboard />} />
+          <Route path="collection/new" element={<AddCollection />} />
           {/* Other routes */}
         </Routes>
       </AuthProvider>

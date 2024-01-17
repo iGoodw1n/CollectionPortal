@@ -54,7 +54,6 @@ const AuthProvider = ({ children }) => {
       setIsAuth(true);
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      navigate("/");
     }
   }
 
