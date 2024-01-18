@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CollectionLogicLayer.DTOs;
 
-namespace CollectionLogicLayer.Services
+namespace CollectionLogicLayer.Services;
+
+internal class CollectionService : ICollectionService
 {
-    internal class CollectionService : ICollectionService
+    public Task CreateCollection(CollectionDto collectionDto)
     {
+        return Task.CompletedTask;
     }
 }
