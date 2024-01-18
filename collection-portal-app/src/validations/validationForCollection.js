@@ -4,7 +4,7 @@ export default Yup.object({
   name: Yup
     .string()
     .required('Name is required'),
-  theme: Yup
+  category: Yup
     .string()
     .required(),
 })

@@ -1,6 +1,6 @@
 import { instance } from "../api.config";
 
-export class Service {
+export class ApiService {
 
   async getAllCategories() {
     try {
@@ -10,7 +10,17 @@ export class Service {
     }
     return false
   }
+
+  async addCollection(data) {
+    try {
+      const result = await instance.post('/collection', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: addCollection() :: ", error)
+    }
+    return false
+  }
 }
 
-const service = new Service()
-export default service
+const apiService = new ApiService()
+export default apiService
