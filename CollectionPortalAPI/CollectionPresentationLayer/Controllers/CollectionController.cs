@@ -10,11 +10,13 @@ namespace CollectionPortalAPI.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly ICollectionService _collectionService;
+        private readonly IPhotoService _photoService;
 
-        public CollectionController(ICategoryService categoryService, ICollectionService collectionService)
+        public CollectionController(ICategoryService categoryService, ICollectionService collectionService, IPhotoService photoService)
         {
             _categoryService = categoryService;
-            _collectionService = collectionService; 
+            _collectionService = collectionService;
+            _photoService = photoService;
         }
 
         [HttpGet("categories")]

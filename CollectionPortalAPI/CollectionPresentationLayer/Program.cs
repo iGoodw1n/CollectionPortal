@@ -1,12 +1,26 @@
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Extensions;
 using CollectionLogicLayer.Extensions;
+using CollectionPortalAPI.Helpers;
 using GameStore.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
+var root = Directory.GetCurrentDirectory();
+var dotenv = Path.Combine(root, ".env");
+DotEnv.Load(dotenv);
+
+var config =
+    new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true)
+        .AddEnvironmentVariables()
+        .Build();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddConfiguration(config);
 
 // Add services to the container.
 
@@ -25,7 +39,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 builder.Services.AddDataServices();
-builder.Services.AddLogicServices();
+builder.Services.AddLogicServices(builder.Configuration);
 
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
