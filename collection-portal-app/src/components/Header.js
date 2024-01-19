@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/AuthProvider';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import ThemeContext from '../contexts/ThemeContext';
 
 const Header = () => {
   const auth = useAuth()
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
-
-  const switchTheme = () => {
-    setTheme(prev => {
-      const newTheme = prev === 'light' ? 'dark' : 'light'
-      localStorage.setItem('theme', newTheme)
-      return newTheme
-    })
-  }
-
+  const [theme, switchTheme] = useContext(ThemeContext)
+  
   useEffect(() => {
     auth.checkAuth()
     // eslint-disable-next-line

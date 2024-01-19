@@ -12,7 +12,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const CollectionForm = () => {
   const ref = useRef(null)
   const [categories, setCategories] = useState([])
-  const [customFields, setCustomFields] = useState([])
+  const [customFields, setCustomFields] = useState({})
   useEffect(() => {
     apiService.getAllCategories()
       .then(categories => {
@@ -29,13 +29,12 @@ const CollectionForm = () => {
           initialValues={{
             name: '',
             description: '',
-            category: ''
           }}
           validationSchema={validationForCollection}
           onSubmit={async (values, { setSubmitting }) => {
             const description = ref?.current.getMarkdown()
             await console.log({...values, customFields, description})
-            const success = await apiService.addCollection({...values, description,  customFields})
+            const success = await apiService.addCollection({...values, description,  ...customFields})
             toast(success ? "Successfully create new collection" : "There is some error. Try again")
             setSubmitting(false)
           }}
@@ -45,7 +44,7 @@ const CollectionForm = () => {
             <Toaster />
               <Form>
                 <MyTextInput name='name' label='Collection name'/>
-                <MySelect name='category' label='Collection category' options={categories} />
+                <MySelect name='categoryId' label='Collection category' options={categories} />
                 <label className='d-block text-center m-3 fs-3'>Description</label>
                 <MarkdownEditor innerRef={ref} text='' />
                 <label className='d-block text-center m-3 fs-3'>Add additional fields</label>
