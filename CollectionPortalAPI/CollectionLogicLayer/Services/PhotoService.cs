@@ -1,5 +1,6 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using CollectionDataLayer.Entities;
 using CollectionLogicLayer.Helpers;
 using CollectionLogicLayer.Services;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +13,6 @@ namespace API.Services
         private readonly Cloudinary _cloudinary;
         public PhotoService(IOptions<CloudinarySettings> config)
         {
-            Console.WriteLine(config.Value.CloudName);
-            Console.WriteLine(config.Value.ApiKey);
-            Console.WriteLine(config.Value.ApiSecret);
             var acc = new Account
             (
                 config.Value.CloudName,
@@ -25,22 +23,15 @@ namespace API.Services
             _cloudinary = new Cloudinary(acc);
         }
 
-        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<Photo?> AddPhotoAsync(IFormFile? file)
         {
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0)
+            Photo? photo = null;
+            if (file is not null && file.Length > 0)
             {
-                using var stream = file.OpenReadStream();
-                var uploadParams = new ImageUploadParams
-                {
-                    File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
-                };
-                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                photo = await UploadPhoto(file);
             }
 
-            return uploadResult;
+            return photo;
         }
 
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
@@ -51,5 +42,41 @@ namespace API.Services
 
             return result;
         }
+
+        private async Task<Photo> UploadPhoto(IFormFile file)
+        {
+            var uploadResult = await UploadPhotoOnCloudServer(file);
+            if (uploadResult.Error != null)
+            {
+                throw new InvalidOperationException("Some errors on photo service");
+            }
+            var photo = CreatePhoto(uploadResult);
+            return photo;
+        }
+
+        private async Task<ImageUploadResult> UploadPhotoOnCloudServer(IFormFile file)
+        {
+            using var stream = file.OpenReadStream();
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(file.FileName, stream),
+                Transformation = new Transformation().Height(500).Width(500).Crop("fill")
+            };
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            return uploadResult;
+        }
+
+        private Photo CreatePhoto(ImageUploadResult uploadResult)
+        {
+            var photo = new Photo
+            {
+                Url = uploadResult.SecureUrl.AbsoluteUri,
+                PublicId = uploadResult.PublicId
+            };
+
+            return photo;
+        }
+
     }
 }

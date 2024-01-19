@@ -1,6 +1,8 @@
 ﻿using CollectionLogicLayer.DTOs;
 using CollectionLogicLayer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CollectionPortalAPI.Controllers
 {
@@ -26,11 +28,20 @@ namespace CollectionPortalAPI.Controllers
             return Ok(categories);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateCollection(CollectionDto collectionDto)
         {
-            await _collectionService.CreateCollection(collectionDto);
+            var userId = GetUserId();
+            var photo = await _photoService.AddPhotoAsync(collectionDto.Image);
+            await _collectionService.AddCollection(collectionDto, photo, userId);
             return Created();
+        }
+
+        private int GetUserId()
+        {
+            var id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new ArgumentNullException(nameof(User));
+            return int.Parse(id);
         }
     }
 }

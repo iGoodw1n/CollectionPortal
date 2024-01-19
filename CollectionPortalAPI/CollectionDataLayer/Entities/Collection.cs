@@ -13,7 +13,9 @@ public class Collection
     [MaxLength(ParamsData.MaxLengthForStringField)]
     public string? Description { get; set; }
 
-    public string ImageUrl { get; set; } = null!;
+    public int? PhotoId { get; set; }
+
+    public Photo? Photo { get; set; }
 
     public int UserId { get; set; }
 

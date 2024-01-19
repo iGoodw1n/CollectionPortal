@@ -1,25 +1,11 @@
 import React, { useState } from 'react'
 
-const AddFields = ({ fields, setFields }) => {
-  const [name, setName] = useState('')
-  const [type, setType] = useState('')
-  const [addedFields, setAddedFields] = useState([])
-  const [options, setOptions] = useState([
-    { value: 'int', text: 'Number' },
-    { value: 'string', text: 'String' },
-    { value: 'text', text: 'Text' },
-    { value: 'date', text: 'Date' },
-    { value: 'checkbox', text: 'Radio Button' },
-  ])
-  const [fieldsCounter, setFieldsCounter] = useState(
-    {
-      int: 0,
-      string: 0,
-      text: 0,
-      date: 0,
-      checkbox: 0
-    }
-  )
+const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
+  const [name, setName] = useState(initialState.name)
+  const [type, setType] = useState(initialState.type)
+  const [addedFields, setAddedFields] = useState(initialState.addedFields)
+  const [options, setOptions] = useState(initialState.options)
+  const [fieldsCounter, setFieldsCounter] = useState(initialState.filedsCounter)
 
   const updateOptions = (type) => {
     const newFieldsCounter = { ...fieldsCounter }
@@ -29,6 +15,17 @@ const AddFields = ({ fields, setFields }) => {
       return prev.filter(option => newFieldsCounter[option.value] < 3)
     })
   }
+
+  const resetData = () => {
+    setName(initialState.name)
+    setType(initialState.type)
+    setAddedFields(initialState.addedFields)
+    setOptions(initialState.options)
+    setFieldsCounter(initialState.fieldsCounter)
+
+  }
+
+  innerRef.current = resetData
 
   const createFieldData = (name, type) => {
     const fieldName = `Custom${type}${fieldsCounter[type] + 1}Name`
@@ -40,27 +37,31 @@ const AddFields = ({ fields, setFields }) => {
   }
 
   const onClickHandle = () => {
-    const nameInput = document.querySelector('#newFieldName')
-    const typeSelect = document.querySelector('#newFieldType')
-    if (nameInput.value
-      && Object.values(fields).every(name => name !== nameInput.value)
-      && options.map(option => option.value).some(value => value === typeSelect.value)) {
+    
+    if (name
+      && Object.values(fields).every(n => n !== name)
+      && options.map(option => option.value).some(value => value === type)) {
       const fieldData = createFieldData(name, type)
       setFields(prev => ({ ...prev, ...fieldData }))
       setAddedFields(prev => [...prev, { name, type }])
       updateOptions(type)
+      setName('')
+      setType('')
     }
   }
   return (
     <>
-      <div className='d-flex flex-wrap m-3 justify-content-center align-items-center gap-3'>
+      <label className='d-block text-center m-3 fs-3'>{label}</label>
+      <div className='d-flex flex-wrap m-3 justify-content-center align-items-center gap-1'>
         <div className='form-group'>
           <label className='fs-4' htmlFor='newFieldName'>Name of field:</label>
         </div>
         <div className='form-group'>
           <input className='form-control' id='newFieldName' value={name} onChange={(e) => setName(e.target.value)} />
         </div>
-        <label className='fs-4 m-1 d-block' htmlFor='newFieldType'>Type of field:</label>
+        <div>
+          <label className='fs-4 m-1 d-block' htmlFor='newFieldType'>Type of field:</label>
+        </div>
         <div className='form-group'>
           <select className='form-control' id='newFieldType' value={type} onChange={(e) => setType(e.target.value)} required>
             <option hidden>Select type of field</option>
@@ -73,7 +74,7 @@ const AddFields = ({ fields, setFields }) => {
       </div>
 
       {
-        Object.keys(fields).length &&
+        Object.keys(fields).length > 0 &&
         <>
           <h3>Added custom fields</h3>
           <table className="table">

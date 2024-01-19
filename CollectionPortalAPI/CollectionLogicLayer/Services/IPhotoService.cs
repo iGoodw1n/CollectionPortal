@@ -1,10 +1,11 @@
 ﻿using CloudinaryDotNet.Actions;
+using CollectionDataLayer.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace CollectionLogicLayer.Services;
 
 public interface IPhotoService
 {
-    Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
+    Task<Photo?> AddPhotoAsync(IFormFile? file);
     Task<DeletionResult> DeletePhotoAsync(string publicId);
 }

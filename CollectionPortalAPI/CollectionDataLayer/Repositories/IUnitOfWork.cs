@@ -6,5 +6,7 @@ public interface IUnitOfWork
 
     ICategoryRepository Categories { get; }
 
+    IPhotoRepository Photos { get; }
+
     Task CompleteAsync();
 }

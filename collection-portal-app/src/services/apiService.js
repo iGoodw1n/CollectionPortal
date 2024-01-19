@@ -13,7 +13,7 @@ export class ApiService {
 
   async addCollection(data) {
     try {
-      const result = await instance.post('/collection', data)
+      const result = await instance.postForm('/collection', data)
       return result.status === 204
     } catch (error) {
       console.log("APIService :: addCollection() :: ", error)

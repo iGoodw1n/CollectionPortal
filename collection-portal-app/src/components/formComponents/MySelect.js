@@ -12,7 +12,7 @@ const MySelect = ({ label, options, ...props }) => {
         ))}
       </select>
       {meta.touched && meta.error ? (
-        <div className="text-error">{meta.error}</div>
+        <div className="text-danger">{meta.error}</div>
       ) : null}
     </div>
   )

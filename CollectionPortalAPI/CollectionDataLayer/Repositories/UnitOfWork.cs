@@ -9,17 +9,21 @@ internal class UnitOfWork : IUnitOfWork
     public UnitOfWork(
         AppDbContext context,
         ICategoryRepository categoryRepository,
-        ICollectionRepository collectionRepository
+        ICollectionRepository collectionRepository,
+        IPhotoRepository photoRepository
         )
     {
         _context = context;
         Categories = categoryRepository;
         Collections = collectionRepository;
+        Photos = photoRepository;
     }
 
     public ICategoryRepository Categories { get; }
 
     public ICollectionRepository Collections { get; }
+
+    public IPhotoRepository Photos { get; }
 
     public async Task CompleteAsync()
     {

@@ -2,7 +2,7 @@
 
 namespace CollectionDataLayer.Repositories;
 
-public interface ICollectionRepository
+public interface IPhotoRepository
 {
-    public void Add(Collection collection);
+    void AddPhoto(Photo photo);
 }

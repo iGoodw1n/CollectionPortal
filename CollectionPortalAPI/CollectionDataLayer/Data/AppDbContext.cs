@@ -14,4 +14,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<Item> Items { get; set; }
 
     public DbSet<Tag> Tags { get; set; }
+
+    public DbSet<Photo> Photos { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Collection>()
+            .HasOne(e => e.Photo)
+            .WithOne(e => e.Collection)
+            .HasForeignKey<Photo>(e => e.CollectionId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
+    }
 }

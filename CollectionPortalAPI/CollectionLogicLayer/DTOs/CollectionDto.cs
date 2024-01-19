@@ -1,5 +1,4 @@
-﻿using CollectionDataLayer.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace CollectionLogicLayer.DTOs;
 
@@ -10,6 +9,8 @@ public record CollectionDto
     public int CategoryId { get; set; }
 
     public string? Description { get; set; }
+
+    public IFormFile? Image { get; set; }
 
     public bool CustomString1State { get; set; }
 

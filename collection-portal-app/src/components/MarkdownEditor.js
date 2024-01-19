@@ -3,37 +3,41 @@ import { BlockTypeSelect, BoldItalicUnderlineToggles, DiffSourceToggleWrapper, L
 import { useContext } from 'react'
 import ThemeContext from '../contexts/ThemeContext'
 
-const MarkdownEditor = ({ text, innerRef }) => {
+const MarkdownEditor = ({ label, text, innerRef }) => {
 
   const [theme] = useContext(ThemeContext)
   return (
-    <div className='border'>
-      <MDXEditor
-        className={theme === 'dark' ? "dark-theme dark-editor" : ''}
-        ref={innerRef}
-        markdown={text}
-        plugins={[
-          headingsPlugin(),
-          listsPlugin(),
-          quotePlugin(),
-          thematicBreakPlugin(),
-          linkPlugin(),
-          markdownShortcutPlugin(),
-          diffSourcePlugin(),
-          toolbarPlugin({
-            toolbarContents: () => (
-              <>
-                {' '}
-                <UndoRedo />
-                <BoldItalicUnderlineToggles />
-                <BlockTypeSelect />
-                <ListsToggle />
-                <DiffSourceToggleWrapper />
-              </>
-            )
-          })
-        ]} />
-    </div>
+    <>
+      <label className='d-block text-center m-3 fs-3'>{label}</label>
+      <div className='border'>
+        <MDXEditor
+          className={theme === 'dark' ? "dark-theme dark-editor" : ''}
+          ref={innerRef}
+          markdown={text}
+          plugins={[
+            headingsPlugin(),
+            listsPlugin(),
+            quotePlugin(),
+            thematicBreakPlugin(),
+            linkPlugin(),
+            markdownShortcutPlugin(),
+            diffSourcePlugin(),
+            toolbarPlugin({
+              toolbarContents: () => (
+                <>
+                  {' '}
+                  <UndoRedo />
+                  <BoldItalicUnderlineToggles />
+                  <BlockTypeSelect />
+                  <ListsToggle />
+                  <DiffSourceToggleWrapper />
+                </>
+              )
+            })
+          ]} />
+      </div>
+    </>
+
   )
 
 }
