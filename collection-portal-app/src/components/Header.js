@@ -22,13 +22,13 @@ const Header = () => {
       </HelmetProvider>
       <Navbar expand="lg" className="bg-body-tertiary" collapseOnSelect={true}>
         <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand to="/" as={NavLink}>Collection App</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               
                 <Nav.Link eventKey='1' as={NavLink} className="nav-link active" aria-current="page" to="/">Home</Nav.Link>
-                <Nav.Link eventKey='2' as={NavLink} className="nav-link" to="/dashboard">Collection</Nav.Link>
+                <Nav.Link eventKey='2' as={NavLink} className="nav-link" to="/my-collection">Collections</Nav.Link>
                 <Nav.Link eventKey='3' as={NavLink} className="nav-link" to="/collection/new">New Collection</Nav.Link>
                 <Nav.Link eventKey='4' as={NavLink} className="nav-link" to="#">Items</Nav.Link>
                 <Nav.Link eventKey='5' onClick={switchTheme}>Switch Theme</Nav.Link>

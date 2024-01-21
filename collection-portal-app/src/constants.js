@@ -1,0 +1,5 @@
+export const FIELD_TYPE_NUMBER = 'Int'
+export const FIELD_TYPE_STRING = 'String'
+export const FIELD_TYPE_TEXT = 'Text'
+export const FIELD_TYPE_DATE = 'Date'
+export const FIELD_TYPE_CHECKBOX = 'CheckBox'

@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-const MyCheckbox = ({ children, ...props }) => {
+const MyCheckBox = ({ children, ...props }) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
   return (
     <div className="justify-content-center">
@@ -16,4 +16,4 @@ const MyCheckbox = ({ children, ...props }) => {
   )
 }
 
-export default MyCheckbox
+export default MyCheckBox
