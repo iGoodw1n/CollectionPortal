@@ -3,10 +3,11 @@ using CollectionLogicLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using CollectionLogicLayer.Helpers;
 
 namespace CollectionPortalAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CollectionController : ControllerBase
     {
@@ -30,18 +31,33 @@ namespace CollectionPortalAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateCollection(CollectionDto collectionDto)
+        public async Task<IActionResult> CreateCollection(CreateCollectionDto collectionDto)
         {
             var userId = GetUserId();
             var photo = await _photoService.AddPhotoAsync(collectionDto.Image);
-            await _collectionService.AddCollection(collectionDto, photo, userId);
+            await _collectionService.AddCollection(collectionDto, photo, userId!.Value);
             return Created();
         }
 
-        private int GetUserId()
+        [HttpGet]
+        public async Task<IActionResult> GetAllCollections([FromQuery]CollectionParams collectionParams)
         {
-            var id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new ArgumentNullException(nameof(User));
-            return int.Parse(id);
+            var userId = GetUserId();
+            var collections = await _collectionService.GetAll(collectionParams, userId);
+            return Ok(collections);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCollection([FromQuery] PaginationParams collectionParams, int id)
+        {
+            var collection = await _collectionService.GetCollection(id, collectionParams);
+            return Ok(collection);
+        }
+
+        private int? GetUserId()
+        {
+            var id = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return id is not null ? int.Parse(id) : null;
         }
     }
 }

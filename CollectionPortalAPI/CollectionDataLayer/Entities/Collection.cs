@@ -99,4 +99,8 @@ public class Collection
 
     [MaxLength(ParamsData.MaxLengthForStringField)]
     public string? CustomCheckBox3Name { get; set; }
+
+    public DateTime CreationDate { get; set; }
+
+    public ICollection<Item> Items { get; set; } = [];
 }

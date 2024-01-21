@@ -7,6 +7,10 @@ public class CollectionMapperProfiles : Profile
 {
     public CollectionMapperProfiles()
     {
-        CreateMap<CollectionDto, Collection>();
+        CreateMap<CreateCollectionDto, Collection>();
+        CreateMap<Collection, CollectionDto>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Photo != null ? src.Photo.Url : null));
+        CreateMap<Collection, CollectionWithItemsDto>()
+            .IncludeBase<Collection, CollectionDto>();
     }
 }

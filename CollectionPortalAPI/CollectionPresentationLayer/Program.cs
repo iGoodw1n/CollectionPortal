@@ -2,6 +2,7 @@ using CollectionDataLayer.Entities;
 using CollectionDataLayer.Extensions;
 using CollectionLogicLayer.Extensions;
 using CollectionPortalAPI.Helpers;
+using CollectionPortalAPI.Infrastructure;
 using GameStore.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
@@ -43,6 +44,7 @@ builder.Services.AddLogicServices(builder.Configuration);
 
 builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 builder.Services.AddAuthorizationBuilder();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 
 
@@ -68,5 +70,7 @@ app.MapControllers();
 app.MapGroup("/account").MapIdentityApi<AppUser>();
 
 app.MapFallbackToFile("index.html");
+
+app.UseExceptionHandler(options => { });
 
 app.Run();

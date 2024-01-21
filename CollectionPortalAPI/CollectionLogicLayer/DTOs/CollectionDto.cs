@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CollectionDataLayer.Entities;
 
 namespace CollectionLogicLayer.DTOs;
 
-public record CollectionDto
+public class CollectionDto
 {
+    public int? Id { get; set; }
+
     public string Name { get; set; } = null!;
 
     public int CategoryId { get; set; }
 
     public string? Description { get; set; }
 
-    public IFormFile? Image { get; set; }
+    public string? ImageUrl { get; set; }
+
+    public Category? Category { get; set; }
 
     public bool CustomString1State { get; set; }
 

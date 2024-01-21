@@ -1,8 +1,17 @@
-﻿using CollectionDataLayer.Entities;
+﻿using CollectionDataLayer.Helpers;
+using CollectionDataLayer.Entities;
+using System.Linq.Expressions;
+using CollectionDataLayer.DTOs;
 
 namespace CollectionDataLayer.Repositories;
 
 public interface ICollectionRepository
 {
-    public void Add(Collection collection);
+    void Add(Collection collection);
+
+    Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams);
+
+    Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams, Expression<Func<Collection, bool>> filter);
+
+    Task<QueryResultForCollectionWithCount> GetCollectionWithItems(int id, QueryParams queryParams);
 }

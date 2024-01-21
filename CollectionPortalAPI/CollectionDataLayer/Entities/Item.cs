@@ -47,4 +47,12 @@ public class Item
     public DateOnly? CustomDate2 { get; set; }
 
     public DateOnly? CustomDate3 { get; set; }
+
+    public int CollectionId { get; set; }
+
+    public DateTime CreationDate { get; set; }
+
+    public DateTime UpdatedDate { get; set; }
+
+    public Collection Collection { get; set; } = null!;
 }
