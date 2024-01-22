@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import apiService from '../services/apiService'
 import { Col, Container, Row } from 'react-bootstrap'
-import CollectionCard from '../components/CollectionCard'
+import CollectionCard from './CollectionCard'
 
-const Collections = () => {
+const Collections = ({ pagesize, orderBy, orderType }) => {
   const [collections, setCollecections] = useState([])
   useEffect(() => {
     apiService
-      .getAllCollections()
+      .getAllCollections({ pagesize, orderBy, orderType })
       .then(res => {
         console.log(res)
         setCollecections(res.items)

@@ -14,6 +14,11 @@ instance.interceptors.request.use(
   }
 )
 
+instance.interceptors.request.use(request => {
+  console.log('Starting Request', JSON.stringify(request, null, 2))
+  return request
+})
+
 
 // создаем перехватчик ответов
 // который в случае невалидного accessToken попытается его обновить

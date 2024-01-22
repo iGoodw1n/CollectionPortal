@@ -9,7 +9,9 @@ internal static class ParamsHelper
         return new QueryParams
         {
             Skip = (paginationParams.PageNumber - 1) * paginationParams.PageSize,
-            Take = paginationParams.PageSize
+            Take = paginationParams.PageSize,
+            OrderBy = paginationParams.OrderBy ?? "creationdate",
+            OrderType = paginationParams.OrderType ?? "desc"
         };
     }
 }

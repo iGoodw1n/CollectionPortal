@@ -3,6 +3,7 @@ using CollectionDataLayer.DTOs;
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
 namespace CollectionDataLayer.Repositories;
@@ -28,13 +29,13 @@ internal class CollectionRepository : ICollectionRepository
 
     public Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams)
     {
-        IQueryable<Collection> query = CreateQuery();
+        IQueryable<Collection> query = CreateQuery().OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
         return GetQuery(query, queryParams);
     }
 
     public Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams, Expression<Func<Collection, bool>> filter)
     {
-        IQueryable<Collection> query = CreateQuery();
+        IQueryable<Collection> query = CreateQuery().OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
         return GetQuery(query.Where(filter), queryParams);
     }
 
@@ -55,7 +56,7 @@ internal class CollectionRepository : ICollectionRepository
     private async Task<QueryResultWithCount<Collection>> GetQuery(IQueryable<Collection> query, QueryParams queryParams)
     {
         var count = await query.CountAsync();
-        var collections = await query.OrderBy(c => c.CreationDate).Skip(queryParams.Skip).Take(queryParams.Take).ToListAsync();
+        var collections = await query.Skip(queryParams.Skip).Take(queryParams.Take).ToListAsync();
         return new QueryResultWithCount<Collection> { TotalCount = count, Entities = collections };
     }
 

@@ -23,7 +23,9 @@ export class ApiService {
 
   async getAllCollections(params) {
     try {
-      return (await instance.get('api/collection', params)).data
+      const response = await instance.get('api/collection', { params })
+      console.log(response);
+      return response.data
     } catch (error) {
       console.log("APIService :: getAllCollections() :: ", error)
     }
