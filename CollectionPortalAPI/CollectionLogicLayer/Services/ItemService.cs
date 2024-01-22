@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using CollectionDataLayer.DTOs;
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Exceptions;
 using CollectionDataLayer.Repositories;
 using CollectionLogicLayer.DTOs;
+using CollectionLogicLayer.Helpers;
 
 namespace CollectionLogicLayer.Services;
 
@@ -21,6 +23,12 @@ internal class ItemService : IItemService
         var collection = await GetCollection(itemDto);
         await AddItemToCollection(itemDto, collection);
         await SaveChanges();
+    }
+
+    public Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams)
+    {
+        var queryParams = ParamsHelper.ConvertPaginationParamsToQuery(paginationParams);
+        return _unitOfWork.Items.GetAll(queryParams);
     }
 
     private async Task<Collection> GetCollection(ItemDto itemDto)
@@ -54,5 +62,4 @@ internal class ItemService : IItemService
     {
         await _unitOfWork.CompleteAsync();
     }
-
 }

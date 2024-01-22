@@ -1,4 +1,5 @@
 ﻿using CollectionLogicLayer.DTOs;
+using CollectionLogicLayer.Helpers;
 using CollectionLogicLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,5 +23,12 @@ public class ItemsController : ControllerBase
     {
         await _itemService.AddItem(itemDto);
         return Created();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get([FromQuery]PaginationParams paginationParams)
+    {
+        var items = await _itemService.GetItems(paginationParams);
+        return Ok(items);
     }
 }

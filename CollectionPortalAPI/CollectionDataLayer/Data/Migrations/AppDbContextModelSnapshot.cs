@@ -104,7 +104,7 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("CollectionDataLayer.Entities.Collection", b =>
@@ -246,7 +246,7 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Collections");
+                    b.ToTable("Collections", (string)null);
                 });
 
             modelBuilder.Entity("CollectionDataLayer.Entities.Item", b =>
@@ -326,7 +326,7 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.HasIndex("CollectionId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("CollectionDataLayer.Entities.Photo", b =>
@@ -353,7 +353,7 @@ namespace CollectionDataLayer.Data.Migrations
                     b.HasIndex("CollectionId")
                         .IsUnique();
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("CollectionDataLayer.Entities.Tag", b =>
@@ -371,7 +371,7 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("ItemTag", b =>
@@ -386,7 +386,7 @@ namespace CollectionDataLayer.Data.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("ItemTag");
+                    b.ToTable("ItemTag", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>

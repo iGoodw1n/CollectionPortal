@@ -77,6 +77,17 @@ export class ApiService {
     }
     return false
   }
+
+  async getAllItems(params) {
+    try {
+      const result = await instance.get('api/items/', { params })
+      console.log(result);
+      return result.data
+    } catch (error) {
+      console.log("APIService :: getAllItems() :: ", error)
+    }
+    return false
+  }
 }
 
 const apiService = new ApiService()

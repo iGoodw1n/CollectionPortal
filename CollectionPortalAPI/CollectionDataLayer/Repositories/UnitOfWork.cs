@@ -11,7 +11,8 @@ internal class UnitOfWork : IUnitOfWork
         ICategoryRepository categoryRepository,
         ICollectionRepository collectionRepository,
         IPhotoRepository photoRepository,
-        ITagRepository tagRepository
+        ITagRepository tagRepository,
+        IItemRepository itemRepository
         )
     {
         _context = context;
@@ -19,6 +20,7 @@ internal class UnitOfWork : IUnitOfWork
         Collections = collectionRepository;
         Photos = photoRepository;
         Tags = tagRepository;
+        Items = itemRepository;
     }
 
     public ICategoryRepository Categories { get; }
@@ -28,6 +30,8 @@ internal class UnitOfWork : IUnitOfWork
     public IPhotoRepository Photos { get; }
 
     public ITagRepository Tags { get; set; }
+
+    public IItemRepository Items { get; set; }
 
     public async Task CompleteAsync()
     {

@@ -10,5 +10,7 @@ public interface IUnitOfWork
 
     ITagRepository Tags { get; }
 
+    IItemRepository Items { get; }
+
     Task CompleteAsync();
 }
