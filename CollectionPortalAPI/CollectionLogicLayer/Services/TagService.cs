@@ -1,16 +1,21 @@
-﻿using CollectionDataLayer.Entities;
+﻿using AutoMapper;
+using CollectionDataLayer.DTOs;
+using CollectionDataLayer.Entities;
 using CollectionDataLayer.Exceptions;
 using CollectionDataLayer.Repositories;
+using CollectionLogicLayer.DTOs;
 
 namespace CollectionLogicLayer.Services;
 
 internal class TagService : ITagService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public TagService(IUnitOfWork unitOfWork)
+    public TagService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<Tag> AddTag(Tag tag)
@@ -20,13 +25,21 @@ internal class TagService : ITagService
         return tag;
     }
 
-    public async Task<Tag> Get(int id)
+    public async Task<TagDto> Get(int id)
     {
-        return await _unitOfWork.Tags.Get(id) ?? throw new NotFoundException($"Tag with id {id} not found");
+        var tag = await _unitOfWork.Tags.Get(id) ?? throw new NotFoundException($"Tag with id {id} not found");
+        return _mapper.Map<TagDto>(tag);
     }
 
-    public Task<List<Tag>> GetAll()
+    public async Task<List<TagDto>> GetAll()
     {
-        return _unitOfWork.Tags.GetAll();
+        var tags = await _unitOfWork.Tags.GetAll();
+        return _mapper.Map<List<TagDto>>(tags);
+    }
+
+    public async Task<List<TagDtoWithCount>> GetAllTagsWithCount()
+    {
+        var tagsWithCount = await _unitOfWork.Tags.GetTagsWithItems();
+        return _mapper.Map<List<TagDtoWithCount>>(tagsWithCount);
     }
 }

@@ -37,5 +37,12 @@ namespace CollectionPortalAPI.Controllers
             await _tagService.AddTag(tag);
             return CreatedAtAction(nameof(Get), new { tag.Id }, tag);
         }
+
+        [HttpGet("tagswithcount")]
+        public async Task<IActionResult> GetTagsWithCount()
+        {
+            var tagsWithCount = await _tagService.GetAllTagsWithCount();
+            return Ok(tagsWithCount);
+        }
     }
 }

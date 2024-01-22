@@ -48,6 +48,15 @@ export class ApiService {
     return false
   }
 
+  async getAllTagsWithCount() {
+    try {
+      return (await instance.get('api/tags/tagswithcount')).data
+    } catch (error) {
+      console.log("APIService :: getAllTagsWithCount() :: ", error)
+    }
+    return false
+  }
+
   async addItem(data) {
     try {
       const result = await instance.post('api/items/', data)

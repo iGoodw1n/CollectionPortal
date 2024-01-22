@@ -1,4 +1,5 @@
 ﻿using CollectionDataLayer.Data;
+using CollectionDataLayer.DTOs;
 using CollectionDataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -31,5 +32,13 @@ internal class TagRepository : ITagRepository
     public async Task<List<Tag>> GetAll(Expression<Func<Tag, bool>> filter)
     {
         return await _context.Tags.Where(filter).ToListAsync();
+    }
+
+    public Task<List<TagWithCount>> GetTagsWithItems()
+    {
+        return _context.Tags
+            .Include(t => t.Items)
+            .Select(t => new TagWithCount() { Tag = t, Count = t.Items.Count })
+            .ToListAsync();
     }
 }

@@ -41,7 +41,7 @@ internal class CollectionRepository : ICollectionRepository
     public Task<QueryResultForCollectionWithCount> GetCollectionWithItems(int id, QueryParams queryParams)
     {
         var query = CreateQuery().Where(c => c.Id == id);
-        return GetQueryWithItems(query, queryParams);
+        return GetQueryWithItems(query, queryParams, id);
     }
 
     private IQueryable<Collection> CreateQuery()
@@ -59,9 +59,9 @@ internal class CollectionRepository : ICollectionRepository
         return new QueryResultWithCount<Collection> { TotalCount = count, Entities = collections };
     }
 
-    private async Task<QueryResultForCollectionWithCount> GetQueryWithItems(IQueryable<Collection> query, QueryParams queryParams)
+    private async Task<QueryResultForCollectionWithCount> GetQueryWithItems(IQueryable<Collection> query, QueryParams queryParams, int collectionId)
     {
-        var count = await query.CountAsync();
+        var count = await _context.Items.Where(i => i.CollectionId == collectionId).CountAsync();
         var collection = await query
             .Include(c => c.Items.OrderBy(i => i.CreationDate).Skip(queryParams.Skip).Take(queryParams.Take))
             .ThenInclude(i => i.Tags)
