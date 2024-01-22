@@ -4,7 +4,7 @@ const MySelect = ({ label, options, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center form-group">
-      <label className="m-3 fs-3" htmlFor={props.name}>{label}</label>
+      <label className="m-2 fs-4" htmlFor={props.name}>{label}</label>
       <select className="form-control" id={props.name} {...props} {...field} >
         <option hidden>Select one</option>
         {options.map(option => (

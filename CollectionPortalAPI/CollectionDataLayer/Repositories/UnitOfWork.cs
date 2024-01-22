@@ -10,13 +10,15 @@ internal class UnitOfWork : IUnitOfWork
         AppDbContext context,
         ICategoryRepository categoryRepository,
         ICollectionRepository collectionRepository,
-        IPhotoRepository photoRepository
+        IPhotoRepository photoRepository,
+        ITagRepository tagRepository
         )
     {
         _context = context;
         Categories = categoryRepository;
         Collections = collectionRepository;
         Photos = photoRepository;
+        Tags = tagRepository;
     }
 
     public ICategoryRepository Categories { get; }
@@ -24,6 +26,8 @@ internal class UnitOfWork : IUnitOfWork
     public ICollectionRepository Collections { get; }
 
     public IPhotoRepository Photos { get; }
+
+    public ITagRepository Tags { get; set; }
 
     public async Task CompleteAsync()
     {

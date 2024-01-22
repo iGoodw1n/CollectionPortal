@@ -9,6 +9,8 @@ public interface ICollectionRepository
 {
     void Add(Collection collection);
 
+    Task<Collection?> Get(int id);
+
     Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams);
 
     Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams, Expression<Func<Collection, bool>> filter);

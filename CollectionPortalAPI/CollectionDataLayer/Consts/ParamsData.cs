@@ -1,7 +1,7 @@
 ﻿namespace CollectionDataLayer.Consts;
 
-internal class ParamsData
+public class ParamsData
 {
-    internal const int MaxLengthForStringField = 100;
-    internal const int MaxLengthForTextField = 10000;
+    public const int MaxLengthForStringField = 100;
+    public const int MaxLengthForTextField = 10000;
 }

@@ -16,6 +16,8 @@ public static class WebApplicationExtension
         services.AddScoped<ICollectionService, CollectionService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<IItemService, ItemService>();
+        services.AddScoped<ITagService, TagService>();
         return services;
     }
 }

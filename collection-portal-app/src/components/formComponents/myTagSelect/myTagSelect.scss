@@ -1,0 +1,20 @@
+.react-select-container .react-select {
+  &__control {
+    background-color: #212529;
+  }
+
+  &__menu {
+    background-color: #212529;
+  }
+
+  &__option {
+    background-color: #212529;
+  }
+
+  &__placeholder {
+    color: aliceblue;
+  }
+  &__input-container input.react-select__input {
+    color: aliceblue !important;
+  }
+}

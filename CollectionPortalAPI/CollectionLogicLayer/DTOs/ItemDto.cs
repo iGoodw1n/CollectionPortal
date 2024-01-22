@@ -1,16 +1,15 @@
-﻿using CollectionDataLayer.Consts;
+﻿using CollectionDataLayer.Entities;
+using CollectionDataLayer.Consts;
 using System.ComponentModel.DataAnnotations;
 
-namespace CollectionDataLayer.Entities;
+namespace CollectionLogicLayer.DTOs;
 
-public class Item
+public class ItemDto
 {
-    public int Id { get; set; }
-
     [MaxLength(ParamsData.MaxLengthForStringField)]
     public string Name { get; set; } = null!;
 
-    public List<Tag> Tags { get; } = [];
+    public List<int> TagIds { get; set; } = [];
 
     [MaxLength(ParamsData.MaxLengthForStringField)]
     public string? CustomString1 { get; set; }
@@ -49,10 +48,4 @@ public class Item
     public DateOnly? CustomDate3 { get; set; }
 
     public int CollectionId { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public DateTime UpdatedDate { get; set; }
-
-    public Collection Collection { get; set; } = null!;
 }

@@ -3,9 +3,7 @@ using CollectionDataLayer.DTOs;
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Helpers;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CollectionDataLayer.Repositories;
 
@@ -21,6 +19,11 @@ internal class CollectionRepository : ICollectionRepository
     public void Add(Collection collection)
     {
         _context.Collections.Add(collection);
+    }
+
+    public async Task<Collection?> Get(int id)
+    {
+        return await  _context.Collections.FindAsync(id);
     }
 
     public Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams)
@@ -59,7 +62,10 @@ internal class CollectionRepository : ICollectionRepository
     private async Task<QueryResultForCollectionWithCount> GetQueryWithItems(IQueryable<Collection> query, QueryParams queryParams)
     {
         var count = await query.CountAsync();
-        var collection = await query.Include(c => c.Items.OrderBy(i => i.CreationDate).Skip(queryParams.Skip).Take(queryParams.Take)).FirstOrDefaultAsync();
+        var collection = await query
+            .Include(c => c.Items.OrderBy(i => i.CreationDate).Skip(queryParams.Skip).Take(queryParams.Take))
+            .ThenInclude(i => i.Tags)
+            .FirstOrDefaultAsync();
         return new QueryResultForCollectionWithCount { TotalCount = count, Collection = collection };
     }
 

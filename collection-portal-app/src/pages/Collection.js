@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import apiService from '../services/apiService'
 import { Container, Image } from 'react-bootstrap'
 import MyPagination from '../components/MyPagination'
 import TableView from '../components/TableView'
 import AddItemForm from '../components/AddItemForm'
 import getFieldWithNames from '../services/fieldService'
+import cardImage from '../card-image.svg'
 
 const Collection = () => {
   const [params, setParams] = useState({})
   const [collecion, setCollection] = useState()
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [showAddForm, setShowAddForm] = useState(false)
-  const [fieldNames, setFieldNames] = useState({})
+  const [customFields, setCustomFields] = useState({})
   const { id } = useParams()
   useEffect(() => {
     if (id) {
@@ -20,19 +21,23 @@ const Collection = () => {
       apiService.getCollection(id)
         .then(res => {
           if (res) {
-            setFieldNames(getFieldWithNames(res))
+            setCustomFields(getFieldWithNames(res))
             setCollection(res)
           }
           console.log(res);
         })
     }
   }, [id, params, showAddForm])
+
+  const updateParams = (page) => {
+    setParams(prev => ({ ...prev, page }))
+  }
   return (
     <Container >
       {collecion &&
         <>
           <div className='d-flex align-items-end flex-wrap gap-2'>
-            <Image thumbnail width='100' height='100' src={collecion.imageUrl} alt={collecion.name} />
+            <Image thumbnail width='100' height='100' src={collecion.imageUrl || cardImage} alt={collecion.name} />
             <div>
               <h2>{collecion.name}</h2>
               <span>{collecion.description}</span>
@@ -45,13 +50,17 @@ const Collection = () => {
           </div>
           {showAddForm &&
             <>
-              <AddItemForm fieldNames={fieldNames} />
-              <button className='btn btn-primary mt-2' onClick={() => setShowAddForm(false)}>Cancel</button>
+              <AddItemForm fieldNames={customFields} collectionId={id} onCancelHandle={() => setShowAddForm(false)} />
+
             </>}
           {collecion.paginatedItems &&
             <>
-              <TableView items={collecion.paginatedItems.Items} fieldNames={fieldNames} />
-              <MyPagination />
+              <TableView items={collecion.paginatedItems.items} customFields={customFields} />
+              {collecion.paginatedItems.totalPages > 1 && <MyPagination
+                pages={collecion.paginatedItems.totalPages}
+                active={collecion.paginatedItems.currentPage}
+                onClickHandle={updateParams}
+              />}
             </>
           }
         </>

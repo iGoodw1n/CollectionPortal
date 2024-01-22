@@ -10,7 +10,7 @@ const Collections = () => {
       .getAllCollections()
       .then(res => {
         console.log(res)
-        setCollecections(res)
+        setCollecections(res.items)
       })
   }, [])
   return (

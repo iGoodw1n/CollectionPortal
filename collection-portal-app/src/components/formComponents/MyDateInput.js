@@ -1,11 +1,11 @@
 import { useField } from "formik";
 
-const MyTextInput = ({ label, ...props }) => {
+const MyDateInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center form-group">
-      <label className="m-2 fs-4" htmlFor={props.name}>{label}</label>
-      <input className="form-control" id={props.name} {...props} {...field} />
+      <label className="fs-4 m-2" htmlFor={props.name}>{label}</label>
+      <input className="form-control" id={props.name} {...props} {...field} type="date"/>
       {meta.touched && meta.error ? (
         <div className="text-danger">{meta.error}</div>
       ) : null}
@@ -13,4 +13,4 @@ const MyTextInput = ({ label, ...props }) => {
   )
 }
 
-export default MyTextInput
+export default MyDateInput

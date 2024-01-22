@@ -38,6 +38,34 @@ export class ApiService {
     }
     return false
   }
+
+  async getAllTags() {
+    try {
+      return (await instance.get('api/tags')).data
+    } catch (error) {
+      console.log("APIService :: getAllTags() :: ", error)
+    }
+    return false
+  }
+
+  async addItem(data) {
+    try {
+      const result = await instance.post('api/items/', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: addItem() :: ", error)
+    }
+    return false
+  }
+
+  async addTag(data) {
+    try {
+      return (await instance.post('api/tags/', data)).data
+    } catch (error) {
+      console.log("APIService :: addTag() :: ", error)
+    }
+    return false
+  }
 }
 
 const apiService = new ApiService()

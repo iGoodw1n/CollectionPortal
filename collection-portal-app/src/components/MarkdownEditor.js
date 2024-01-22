@@ -7,8 +7,8 @@ const MarkdownEditor = ({ label, text, innerRef }) => {
 
   const [theme] = useContext(ThemeContext)
   return (
-    <>
-      <label className='d-block text-center m-3 fs-3'>{label}</label>
+    <div>
+      <label className='d-block text-center m-2 fs-4'>{label}</label>
       <div className='border'>
         <MDXEditor
           className={theme === 'dark' ? "dark-theme dark-editor" : ''}
@@ -24,19 +24,19 @@ const MarkdownEditor = ({ label, text, innerRef }) => {
             diffSourcePlugin(),
             toolbarPlugin({
               toolbarContents: () => (
-                <>
+                <div className='d-flex flex-wrap'>
                   {' '}
                   <UndoRedo />
                   <BoldItalicUnderlineToggles />
                   <BlockTypeSelect />
                   <ListsToggle />
                   <DiffSourceToggleWrapper />
-                </>
+                </div>
               )
             })
           ]} />
       </div>
-    </>
+    </div>
 
   )
 

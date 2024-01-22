@@ -9,4 +9,6 @@ public class Tag
 
     [MaxLength(ParamsData.MaxLengthForStringField)]
     public string Name { get; set; } = null!;
+
+    public List<Item> Items { get; set; } = [];
 }

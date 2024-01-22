@@ -8,5 +8,7 @@ public interface IUnitOfWork
 
     IPhotoRepository Photos { get; }
 
+    ITagRepository Tags { get; }
+
     Task CompleteAsync();
 }
