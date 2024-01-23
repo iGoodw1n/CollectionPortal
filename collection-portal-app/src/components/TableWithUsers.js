@@ -73,7 +73,7 @@ const TableWithUsers = () => {
         if (res) {
           toast.success("Users are successfully set as admin")
           setCheckedUsers([])
-          setParams(prev => prev)
+          setParams(prev => ({ ...prev }))
         } else {
           toast.error("Something goes wrong. Try again")
         }
@@ -90,7 +90,7 @@ const TableWithUsers = () => {
           if (users.includes(auth.isAdmin)) {
             auth.setIsAdmin(null)
           }
-          setParams(prev => prev)
+          setParams(prev => ({ ...prev }))
         } else {
           toast.error("Something goes wrong. Try again")
         }
@@ -105,7 +105,7 @@ const TableWithUsers = () => {
           toast.success("Users are successfully deleted")
           blockCurrentUser()
           setCheckedUsers([])
-          setParams(prev => prev)
+          setParams(prev => ({ ...prev }))
         } else {
           toast.error("Something goes wrong. Try again")
         }

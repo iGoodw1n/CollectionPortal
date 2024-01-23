@@ -36,7 +36,7 @@ const Header = () => {
                   <Nav.Link eventKey='7' onClick={() => auth.logOut()}>Log out</Nav.Link>
                 </>
                 : <Nav.Link eventKey='6' as={NavLink} to="/login">Login</Nav.Link>}
-              {auth.isAuth && auth.isAdmin && <Nav.Link eventKey='8' as={NavLink} to="/admin">Admin Panel</Nav.Link>}
+              {auth.isAuth && auth.adminId && <Nav.Link eventKey='8' as={NavLink} to="/admin">Admin Panel</Nav.Link>}
               <Button variant={theme === 'dark' ? 'light' : 'dark'} onClick={switchTheme}>Switch Theme</Button>
             </Nav>
           </Navbar.Collapse>
