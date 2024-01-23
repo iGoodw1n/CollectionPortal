@@ -2,10 +2,11 @@ import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../api.config.js";
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false)
+  const [adminId, setAdminId] = useState(null)
 
   const navigate = useNavigate();
 
@@ -54,10 +55,24 @@ const AuthProvider = ({ children }) => {
       setIsAuth(true);
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
+      checkIsAdmin()
+    }
+  }
+
+  const checkIsAdmin = async () => {
+    try {
+      const result = await instance.get('/api/account/check')
+      console.log("AdminStatus", result);
+      if (result.status === 200) {
+        setAdminId(result.data)
+      }
+    } catch (error) {
+      console.log("AuthProvider :: checkIsAdmin() :: ", error)
     }
   }
 
   const logOut = () => {
+    setAdminId(null);
     setIsAuth(false);
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
@@ -65,7 +80,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuth, loginAction, logOut, signUpAction, checkAuth }}>
+    <AuthContext.Provider value={{ isAuth, adminId, setIsAdmin: setAdminId, loginAction, logOut, signUpAction, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

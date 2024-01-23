@@ -12,5 +12,7 @@ public interface IUnitOfWork
 
     IItemRepository Items { get; }
 
+    IAccountRepository Users { get; }
+
     Task CompleteAsync();
 }

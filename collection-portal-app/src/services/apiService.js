@@ -88,6 +88,68 @@ export class ApiService {
     }
     return false
   }
+
+  async getAllUsers(params) {
+    try {
+      const result = await instance.get('api/account/', { params })
+      console.log(result);
+      return result.data
+    } catch (error) {
+      console.log("APIService :: getAllUsers() :: ", error)
+    }
+    return false
+  }
+
+  async deleteUsers(data) {
+    try {
+      const result = await instance.delete('api/account/', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: deleteUsers() :: ", error)
+    }
+    return false
+  }
+
+  async blockUsers(data) {
+    try {
+      const result = await instance.put('api/account/block', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: blockUsers() :: ", error)
+    }
+    return false
+  }
+
+  async unblockUsers(data) {
+    try {
+      console.log('PutData', data)
+      const result = await instance.put('api/account/unblock', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: unblockUsers() :: ", error)
+    }
+    return false
+  }
+
+  async setAdmin(data) {
+    try {
+      const result = await instance.put('api/account/setAdmin', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: setAdmin() :: ", error)
+    }
+    return false
+  }
+
+  async removeAdmin(data) {
+    try {
+      const result = await instance.put('api/account/removeAdmin', data)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: removeAdmin() :: ", error)
+    }
+    return false
+  }
 }
 
 const apiService = new ApiService()

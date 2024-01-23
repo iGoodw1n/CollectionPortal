@@ -11,6 +11,7 @@ import ThemeContextProvider from './contexts/ThemeContextProvider';
 import MyCollection from './pages/MyCollection';
 import Collections from './components/Collections';
 import CollectionPage from './pages/CollectionPage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
 
@@ -27,6 +28,9 @@ function App() {
             <Route path="my-collection" element={<Collections />} />
             <Route path="collection/:id" element={<CollectionPage />} />
             <Route path="collection/new" element={<AddCollection />} />
+            <Route element={<PrivateRoute admin={true}/>} >
+              <Route path="admin" element={<AdminPage />} />
+            </Route>
             {/* Other routes */}
           </Routes>
         </AuthProvider>

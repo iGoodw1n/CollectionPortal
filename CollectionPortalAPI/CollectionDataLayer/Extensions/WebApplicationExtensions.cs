@@ -26,6 +26,7 @@ public static class WebApplicationExtensions
         services.AddScoped<IPhotoRepository, PhotoRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<AppDbContextInitialiser>();

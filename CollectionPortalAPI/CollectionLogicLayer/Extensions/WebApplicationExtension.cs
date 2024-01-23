@@ -18,6 +18,7 @@ public static class WebApplicationExtension
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<ITagService, TagService>();
+        services.AddScoped<IAccountService, AccountService>();
         return services;
     }
 }
