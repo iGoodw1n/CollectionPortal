@@ -5,8 +5,7 @@ import { instance } from "../api.config.js";
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-  const [isAuth, setIsAuth] = useState(false)
-  const [adminId, setAdminId] = useState(null)
+  const [authData, setAuthData] = useState(null)
 
   const navigate = useNavigate();
 
@@ -16,13 +15,11 @@ const AuthProvider = ({ children }) => {
       console.log(response)
       if (response) {
         if (response.status === 401) return 'Password or email is incorrect'
-        setIsAuth(true);
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
-        navigate("/");
+        localStorage.setItem("token", response.data.accessToken)
+        localStorage.setItem("refreshToken", response.data.refreshToken)
+        checkAuth()
+        navigate("/")
       }
-
-      throw new Error(response?.statusText);
     } catch (err) {
       console.error(err);
     }
@@ -54,38 +51,38 @@ const AuthProvider = ({ children }) => {
       console.log("Check auth");
       const response = await instance.post("/account/refresh", { refreshToken })
       if (response && response.status === 200) {
-        setIsAuth(true);
         localStorage.setItem("token", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
-        checkIsAdmin()
+        getUserData()
       } else {
         logOut()
       }
     } catch (error) {
       logOut()
     }
-    
+
   }
 
-  const checkIsAdmin = async () => {
+  const getUserData = async () => {
     try {
       const result = await instance.get('/api/account/check')
-      console.log("AdminStatus", result);
+      console.log("UserStatus", result);
       if (result.status === 200) {
-        setAdminId(result.data)
+        if (JSON.stringify(result.data) !== JSON.stringify(authData)) {
+          setAuthData(result.data)
+        }
       } else {
-        setAdminId(null)
+        setAuthData(null)
       }
     } catch (error) {
       console.log("AuthProvider :: checkIsAdmin() :: ", error)
-      setAdminId(null)
+      setAuthData(null)
     }
   }
 
   const logOut = () => {
     console.log("CLear interval");
-    setAdminId(null);
-    setIsAuth(false);
+    setAuthData(null);
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     navigate("/");
@@ -99,7 +96,7 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ isAuth, adminId, setIsAdmin: setAdminId, loginAction, logOut, signUpAction, checkAuth }}>
+    <AuthContext.Provider value={{ authData, setAuthData, loginAction, logOut, signUpAction, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

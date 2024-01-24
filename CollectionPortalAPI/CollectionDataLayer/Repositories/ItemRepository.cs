@@ -18,7 +18,7 @@ internal class ItemRepository : IItemRepository
 
     public async Task<Item?> Get(int id)
     {
-        return await _context.Items.Include(i => i.Collection).FirstOrDefaultAsync(i => i.Id == id);
+        return await _context.Items.Include(i => i.Collection).Include(i => i.Tags).FirstOrDefaultAsync(i => i.Id == id);
     }
 
     public Task<QueryResultWithCount<Item>> GetAll(QueryParams queryParams)

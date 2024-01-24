@@ -1,4 +1,5 @@
-﻿using CollectionLogicLayer.Helpers;
+﻿using CollectionLogicLayer.Consts;
+using CollectionLogicLayer.Helpers;
 using CollectionLogicLayer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using System.Security.Claims;
 
 namespace CollectionPortalAPI.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class AccountController : ControllerBase
@@ -26,10 +27,13 @@ public class AccountController : ControllerBase
             Console.WriteLine(claim.Type);
             Console.WriteLine(claim.Value);
         }
-        var id = User.FindFirst(ClaimTypes.NameIdentifier);
-        return Ok(id?.Value);
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var adminRole = User.FindFirstValue(ClaimTypes.Role);
+        var userName = User.FindFirstValue(ClaimTypes.Name);
+        return Ok(new { Id = id, IsAdmin = adminRole == Names.ADMIN, UserName = userName });
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] PaginationParams paginationParams)
     {
@@ -37,6 +41,7 @@ public class AccountController : ControllerBase
         return Ok(users);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete]
     public async Task<IActionResult> DeleteUsers(List<int> ids)
     {
@@ -44,6 +49,7 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("block")]
     public async Task<IActionResult> BlockUsers(List<int> ids)
     {
@@ -51,6 +57,7 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("unblock")]
     public async Task<IActionResult> UnblockUsers(List<int> ids)
     {
@@ -58,6 +65,7 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("setAdmin")]
     public async Task<IActionResult> SetAdminUsers(List<int> ids)
     {
@@ -65,6 +73,7 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("removeAdmin")]
     public async Task<IActionResult> RemoveAdminUsers(List<int> ids)
     {

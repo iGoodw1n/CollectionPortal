@@ -39,6 +39,7 @@ internal class CommentRepository : ICommentRepository
     public Task<QueryResultWithCount<Comment>> GetAllByItem(QueryParams queryParams, int itemId)
     {
         var query = _context.Comments
+            .Include(i => i.User)
             .Where(c => c.ItemId == itemId)
             .OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
         return GetQuery(query, queryParams);

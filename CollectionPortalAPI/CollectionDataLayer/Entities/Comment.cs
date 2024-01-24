@@ -18,4 +18,6 @@ public class Comment
     public int ItemId { get; set; }
 
     public Item Item { get; set; } = null!;
+
+    public DateTime CreationDate { get; set; }
 }

@@ -89,6 +89,28 @@ export class ApiService {
     return false
   }
 
+  async getItem(id) {
+    try {
+      const result = await instance.get(`api/items/${id}`)
+      console.log(result);
+      return result.data
+    } catch (error) {
+      console.log("APIService :: getItem() :: ", error)
+    }
+    return false
+  }
+
+  async getAllCommentsByItem(id, params) {
+    try {
+      const result = await instance.get(`api/comments/byitem/${id}`, { params })
+      console.log(result);
+      return result.data
+    } catch (error) {
+      console.log("APIService :: getAllCommentsById() :: ", error)
+    }
+    return false
+  }
+
   async getAllUsers(params) {
     try {
       const result = await instance.get('api/account/', { params })
@@ -147,6 +169,27 @@ export class ApiService {
       return result.status === 204
     } catch (error) {
       console.log("APIService :: removeAdmin() :: ", error)
+    }
+    return false
+  }
+
+  async deleteComment(id) {
+    try {
+      const result = await instance.delete(`api/comments/${id}`)
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: deleteComment() :: ", error)
+    }
+    return false
+  }
+
+  async addComment(data) {
+    try {
+      const result = await instance.post('api/comments/', data)
+      console.log(result);
+      return result.status === 204
+    } catch (error) {
+      console.log("APIService :: addComment() :: ", error)
     }
     return false
   }

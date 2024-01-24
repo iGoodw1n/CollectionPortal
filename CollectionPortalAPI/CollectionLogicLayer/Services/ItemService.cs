@@ -31,6 +31,12 @@ internal class ItemService : IItemService
         return _unitOfWork.Items.GetAll(queryParams);
     }
 
+    public async Task<Item> GetItem(int id)
+    {
+        var item = await _unitOfWork.Items.Get(id) ?? throw new NotFoundException("Item not found");
+        return item;
+    }
+
     private async Task<Collection> GetCollection(ItemDto itemDto)
     {
         return await _unitOfWork.Collections.Get(itemDto.CollectionId)

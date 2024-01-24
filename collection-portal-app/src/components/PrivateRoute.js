@@ -4,9 +4,9 @@ import { useAuth } from "../hooks/AuthProvider";
 
 const PrivateRoute = ({admin}) => {
   const user = useAuth();
-  if (!user.isAuth) {
+  if (!user.authData) {
     return <Navigate to="/login" />
-  } else if (admin && !user.adminId) {
+  } else if (admin && !user.authData.isAdmin) {
     return <Navigate to="/" />
   }
   return <Outlet />;

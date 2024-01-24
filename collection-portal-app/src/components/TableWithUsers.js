@@ -33,7 +33,7 @@ const TableWithUsers = () => {
   }
 
   const blockCurrentUser = () => {
-    if (checkedUsers.includes(auth.adminId)) {
+    if (checkedUsers.includes(auth.authData.id)) {
       auth.logOut()
     }
   }
@@ -87,8 +87,8 @@ const TableWithUsers = () => {
         if (res) {
           toast.success("Users are successfully removed from admin")
           setCheckedUsers([])
-          if (users.includes(auth.isAdmin)) {
-            auth.setIsAdmin(null)
+          if (users.includes(auth.authData)) {
+            auth.setAuthData(prev => ({...prev, isAdmin: false}))
           }
           setParams(prev => ({ ...prev }))
         } else {

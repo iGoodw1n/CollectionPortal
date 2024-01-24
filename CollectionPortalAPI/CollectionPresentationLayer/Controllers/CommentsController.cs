@@ -10,7 +10,6 @@ using System.Security.Claims;
 
 namespace CollectionPortalAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommentsController : ControllerBase
@@ -28,10 +27,11 @@ namespace CollectionPortalAPI.Controllers
         public async Task<IActionResult> Add(CommentDto comment)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value  ?? throw new UnauthorizedAccessException("User does not authorized");
-            await _commentService.Add(comment);
+            await _commentService.Add(comment, userId);
             return Created();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public Task<IActionResult> Delete(int id)
         {
@@ -50,6 +50,7 @@ namespace CollectionPortalAPI.Controllers
             return Ok(comments);
         }
 
+        
         private async Task<IActionResult> DeleteAsAdmin(int id)
         {
             await _commentService.DeleteWithAdminRole(id);

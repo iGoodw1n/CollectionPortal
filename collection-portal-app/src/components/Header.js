@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/AuthProvider';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import ThemeContext from '../contexts/ThemeContext';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 
 const Header = () => {
   const auth = useAuth()
@@ -26,13 +26,17 @@ const Header = () => {
               <Nav.Link eventKey='2' as={NavLink} to="/my-collection">Collections</Nav.Link>
               <Nav.Link eventKey='3' as={NavLink} to="/collection/new">New Collection</Nav.Link>
               <Nav.Link eventKey='4' as={NavLink} to="/items">Items</Nav.Link>
-              {auth.isAuth
+              {auth.authData
                 ? <>
                   <Nav.Link eventKey='6' as={NavLink} to="/mypage">My Collections</Nav.Link>
-                  <Nav.Link eventKey='7' onClick={() => auth.logOut()}>Log out</Nav.Link>
+                  {auth.authData.isAdmin && <Nav.Link eventKey='8' as={NavLink} to="/admin">Admin Panel</Nav.Link>}
+                  <NavDropdown title={auth.authData.userName} id="basic-nav-dropdown">
+                    <NavDropdown.Item onClick={() => auth.logOut()}>
+                      Log out
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
                 : <Nav.Link eventKey='6' as={NavLink} to="/login">Login</Nav.Link>}
-              {auth.isAuth && auth.adminId && <Nav.Link eventKey='8' as={NavLink} to="/admin">Admin Panel</Nav.Link>}
               <Button variant={theme === 'dark' ? 'light' : 'dark'} onClick={switchTheme}>Switch Theme</Button>
             </Nav>
           </Navbar.Collapse>

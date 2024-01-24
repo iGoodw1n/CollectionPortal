@@ -6,11 +6,11 @@ namespace CollectionLogicLayer.Services;
 
 public interface ICommentService
 {
-    Task Add(CommentDto commentDto);
+    Task Add(CommentDto commentDto, string userId);
 
     Task Delete(int id, string userId);
 
     Task DeleteWithAdminRole(int id);
 
-    Task<PagedList<Comment>> GetAllByItem(PaginationParams paginationParams, int id);
+    Task<PagedList<CommentWithUser>> GetAllByItem(PaginationParams paginationParams, int id);
 }

@@ -12,6 +12,7 @@ import MyCollection from './pages/MyCollection';
 import Collections from './components/Collections';
 import CollectionPage from './pages/CollectionPage';
 import AdminPage from './pages/AdminPage';
+import ItemPage from './pages/ItemPage';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="dashboard" element={<PrivateRoute><MyCollection /></PrivateRoute>} />
             <Route path="my-collection" element={<Collections />} />
             <Route path="collection/:id" element={<CollectionPage />} />
+            <Route path="item/:id" element={<ItemPage />} />
             <Route path="collection/new" element={<AddCollection />} />
             <Route element={<PrivateRoute admin={true}/>} >
               <Route path="admin" element={<AdminPage />} />
