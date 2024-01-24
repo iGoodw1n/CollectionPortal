@@ -19,6 +19,7 @@ public static class WebApplicationExtension
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<ITagService, TagService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<ICommentService, CommentService>();
         return services;
     }
 }

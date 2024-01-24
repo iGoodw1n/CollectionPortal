@@ -14,5 +14,7 @@ public interface IUnitOfWork
 
     IAccountRepository Users { get; }
 
+    ICommentRepository Comments { get; }
+
     Task CompleteAsync();
 }

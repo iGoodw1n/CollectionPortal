@@ -6,5 +6,7 @@ namespace CollectionDataLayer.Repositories;
 
 public interface IItemRepository
 {
-    public Task<QueryResultWithCount<Item>> GetAll(QueryParams queryParams);
+    Task<Item?> Get(int id);
+
+    Task<QueryResultWithCount<Item>> GetAll(QueryParams queryParams);
 }

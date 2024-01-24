@@ -55,4 +55,6 @@ public class Item
     public DateTime UpdatedDate { get; set; }
 
     public Collection Collection { get; set; } = null!;
+
+    public List<Comment> Comments { get; set; } = [];
 }

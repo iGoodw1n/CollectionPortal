@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../api.config.js";
 
@@ -50,13 +50,21 @@ const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     const refreshToken = localStorage.getItem('refreshToken')
     if (!refreshToken) return
-    const response = await instance.post("/account/refresh", { refreshToken })
-    if (response && response.status) {
-      setIsAuth(true);
-      localStorage.setItem("token", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      checkIsAdmin()
+    try {
+      console.log("Check auth");
+      const response = await instance.post("/account/refresh", { refreshToken })
+      if (response && response.status === 200) {
+        setIsAuth(true);
+        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
+        checkIsAdmin()
+      } else {
+        logOut()
+      }
+    } catch (error) {
+      logOut()
     }
+    
   }
 
   const checkIsAdmin = async () => {
@@ -65,19 +73,30 @@ const AuthProvider = ({ children }) => {
       console.log("AdminStatus", result);
       if (result.status === 200) {
         setAdminId(result.data)
+      } else {
+        setAdminId(null)
       }
     } catch (error) {
       console.log("AuthProvider :: checkIsAdmin() :: ", error)
+      setAdminId(null)
     }
   }
 
   const logOut = () => {
+    console.log("CLear interval");
     setAdminId(null);
     setIsAuth(false);
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-    navigate("/login");
+    navigate("/");
   };
+
+  useEffect(() => {
+    const id = setInterval(checkAuth, 5000)
+
+    return () => clearInterval(id)
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <AuthContext.Provider value={{ isAuth, adminId, setIsAdmin: setAdminId, loginAction, logOut, signUpAction, checkAuth }}>

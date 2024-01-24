@@ -31,4 +31,11 @@ public class ItemsController : ControllerBase
         var items = await _itemService.GetItems(paginationParams);
         return Ok(items);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var item = await _itemService.GetItem(id);
+        return Ok(item);
+    }
 }

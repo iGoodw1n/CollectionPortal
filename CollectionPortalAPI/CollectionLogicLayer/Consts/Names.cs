@@ -1,6 +1,6 @@
 ﻿namespace CollectionLogicLayer.Consts;
 
-internal class Names
+public class Names
 {
-    internal const string ADMIN = "Admin";
+    public const string ADMIN = "Admin";
 }

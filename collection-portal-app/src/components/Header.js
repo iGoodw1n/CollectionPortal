@@ -9,10 +9,6 @@ const Header = () => {
   const auth = useAuth()
   const [theme, switchTheme] = useContext(ThemeContext)
 
-  useEffect(() => {
-    auth.checkAuth()
-    // eslint-disable-next-line
-  }, [])
   return (
     <>
       <HelmetProvider>

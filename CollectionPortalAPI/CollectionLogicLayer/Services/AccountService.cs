@@ -15,19 +15,21 @@ internal class AccountService : IAccountService
     private readonly IMapper _mapper;
     private readonly RoleManager<IdentityRole<int>> _roleManager;
     private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> signManager;
 
-    public AccountService(IUnitOfWork unitOfWork, IMapper mapper, RoleManager<IdentityRole<int>> roleManager, UserManager<AppUser> userManager)
+    public AccountService(IUnitOfWork unitOfWork, IMapper mapper, RoleManager<IdentityRole<int>> roleManager, UserManager<AppUser> userManager, SignInManager<AppUser> signManager)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _roleManager = roleManager;
         _userManager = userManager;
+        this.signManager = signManager;
     }
 
     public async Task BlockUsers(List<int> userIds)
     {
         var users = await GetUsers(userIds);
-        BlockUsers(users);
+        await BlockUsers(users);
         await SaveChanges();
     }
 
@@ -75,10 +77,11 @@ internal class AccountService : IAccountService
         return _unitOfWork.Users.GetAll(u => userIds.Contains(u.Id));
     }
 
-    private static void BlockUsers(List<AppUser> users)
+    private async Task BlockUsers(List<AppUser> users)
     {
         foreach (var user in users)
         {
+            await _userManager.UpdateSecurityStampAsync(user);
             user.LockoutEnabled = true;
             user.LockoutEnd = DateTime.UtcNow.AddDays(365);
         }

@@ -9,5 +9,7 @@ public interface IItemService
 {
     Task AddItem(ItemDto itemDto);
 
+    Task<Item> GetItem(int id);
+
     public Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams);
 }

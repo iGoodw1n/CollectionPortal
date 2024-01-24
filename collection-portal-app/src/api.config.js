@@ -35,10 +35,7 @@ instance.interceptors.response.use(
    originalRequest._isRetry = true; 
     if (
       // проверим, что ошибка именно из-за невалидного accessToken
-      error.response.status === 401 && 
-      // проверим, что запрос не повторный
-      error.config &&
-      !error.config._isRetry
+      error.response.status === 401 && localStorage.getItem("refreshToken")
     ) {
       try {
         // запрос на обновление токенов
@@ -50,10 +47,9 @@ instance.interceptors.response.use(
         return instance.request(originalRequest);
       } catch (error) {
         console.log("AUTH ERROR");
+        localStorage.removeItem("refreshToken")
+        localStorage.removeItem("token")
       }
     }
-    // на случай, если возникла другая ошибка (не связанная с авторизацией)
-    // пробросим эту ошибку 
-    throw error;
   }
 );
