@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
   const [name, setName] = useState(initialState.name)
@@ -6,6 +7,7 @@ const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
   const [addedFields, setAddedFields] = useState(initialState.addedFields)
   const [options, setOptions] = useState(initialState.options)
   const [fieldsCounter, setFieldsCounter] = useState(initialState.filedsCounter)
+  const { t } = useTranslation()
 
   const updateOptions = (type) => {
     const newFieldsCounter = { ...fieldsCounter }
@@ -37,7 +39,7 @@ const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
   }
 
   const onClickHandle = () => {
-    
+
     if (name
       && Object.values(fields).every(n => n !== name)
       && options.map(option => option.value).some(value => value === type)) {
@@ -54,34 +56,34 @@ const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
       <label className='d-block text-center m-3 fs-3'>{label}</label>
       <div className='d-flex flex-wrap m-3 justify-content-center align-items-center gap-1'>
         <div className='form-group'>
-          <label className='fs-4' htmlFor='newFieldName'>Name of field:</label>
+          <label className='fs-4' htmlFor='newFieldName'>{t('Name of field:')}</label>
         </div>
         <div className='form-group'>
           <input className='form-control' id='newFieldName' value={name} onChange={(e) => setName(e.target.value)} />
         </div>
         <div>
-          <label className='fs-4 m-1 d-block' htmlFor='newFieldType'>Type of field:</label>
+          <label className='fs-4 m-1 d-block' htmlFor='newFieldType'>{t('Type of field:')}</label>
         </div>
         <div className='form-group'>
           <select className='form-control' id='newFieldType' value={type} onChange={(e) => setType(e.target.value)} required>
-            <option hidden>Select type of field</option>
+            <option hidden>{t('Select type of field')}</option>
             {options.map(option => (<option value={option.value} key={option.value}>{option.text}</option>))}
           </select>
         </div>
         <div className='text-center'>
-          <button className='btn btn-primary' onClick={onClickHandle} type='button'>Add field</button>
+          <button className='btn btn-primary' onClick={onClickHandle} type='button'>{t('Add field')}</button>
         </div>
       </div>
 
       {
         Object.keys(fields).length > 0 &&
         <>
-          <h3>Added custom fields</h3>
+          <h3>{t('Added custom fields')}</h3>
           <table className="table">
             <thead>
               <tr>
-                <th scope="col">Field Name</th>
-                <th scope="col">Field Type</th>
+                <th scope="col">{t('Field Name')}</th>
+                <th scope="col">{t('Field Type')}</th>
               </tr>
             </thead>
             <tbody>
@@ -94,10 +96,8 @@ const AddFields = ({ label, fields, setFields, initialState, innerRef }) => {
             </tbody>
           </table>
         </>
-
       }
     </>
-
   )
 }
 

@@ -7,6 +7,7 @@ import TableView from './TableView'
 import AddItemForm from './AddItemForm'
 import getFieldWithNames from '../services/fieldService'
 import cardImage from '../card-image.svg'
+import { useTranslation } from 'react-i18next'
 
 const Collection = () => {
   const [params, setParams] = useState({})
@@ -15,6 +16,7 @@ const Collection = () => {
   const [showAddForm, setShowAddForm] = useState(false)
   const [customFields, setCustomFields] = useState({})
   const { id } = useParams()
+  const { t } = useTranslation();
   useEffect(() => {
     if (id) {
       console.log(id);
@@ -43,9 +45,9 @@ const Collection = () => {
               <span>{collecion.description}</span>
             </div>
             <div className='d-flex flex-column gap-1'>
-              <button className='btn btn-primary btn-sm' onClick={() => setShowAddForm(true)}>Add item</button>
-              <button className='btn btn-primary btn-sm' to=''>Edit Collection</button>
-              <button className='btn btn-danger btn-sm' to=''>Delete Collection</button>
+              <button className='btn btn-primary btn-sm' onClick={() => setShowAddForm(true)}>{t('Add item')}</button>
+              <button className='btn btn-primary btn-sm' to=''>{t('Edit Collection')}</button>
+              <button className='btn btn-danger btn-sm' to=''>{t('Delete Collection')}</button>
             </div>
           </div>
           {showAddForm &&

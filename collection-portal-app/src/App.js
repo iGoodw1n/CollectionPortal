@@ -15,7 +15,7 @@ import AdminPage from './pages/AdminPage';
 import ItemPage from './pages/ItemPage';
 
 function App() {
-
+  
   return (
     <Router>
       <ThemeContextProvider>
@@ -26,7 +26,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="dashboard" element={<PrivateRoute><MyCollection /></PrivateRoute>} />
-            <Route path="my-collection" element={<Collections />} />
+            <Route path="collections" element={<Collections />} />
             <Route path="collection/:id" element={<CollectionPage />} />
             <Route path="item/:id" element={<ItemPage />} />
             <Route path="collection/new" element={<AddCollection />} />

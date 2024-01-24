@@ -8,6 +8,7 @@ import apiService from '../services/apiService';
 import AddFields from './formComponents/AddFields';
 import toast, { Toaster } from 'react-hot-toast';
 import MyImageUpload from './formComponents/MyImageUpload';
+import { useTranslation } from 'react-i18next';
 
 const initialState = {
   name: '',
@@ -29,13 +30,13 @@ const initialState = {
   },
 }
 
-
 const CollectionForm = () => {
   const ref = useRef(null)
   const refImage = useRef(null)
   const refFields = useRef(null)
   const [categories, setCategories] = useState([])
   const [customFields, setCustomFields] = useState({})
+  const { t } = useTranslation();
   useEffect(() => {
     apiService.getAllCategories()
       .then(categories => {
@@ -77,14 +78,14 @@ const CollectionForm = () => {
               <>
                 <Toaster />
                 <Form>
-                  <MyTextInput name='name' label='Collection name' />
-                  <MySelect name='categoryId' label='Collection category' options={categories} />
-                  <MyImageUpload innerRef={refImage} name='image' label='Image for collection' />
-                  <MarkdownEditor innerRef={ref} text='' label='Description' />
-                  <AddFields innerRef={refFields} initialState={initialState} fields={customFields} setFields={setCustomFields} label='Add additional fields' />
+                  <MyTextInput name='name' label={t('Collection name')} />
+                  <MySelect name='categoryId' label={t('Collection category')} options={categories} />
+                  <MyImageUpload innerRef={refImage} name='image' label={t('Image for collection')} />
+                  <MarkdownEditor innerRef={ref} text='' label={t('Description')} />
+                  <AddFields innerRef={refFields} initialState={initialState} fields={customFields} setFields={setCustomFields} label={t('Add additional fields')} />
                   <div className='text-center mt-3'>
                     <button className='btn btn-primary btn-lg' type="submit" disabled={isSubmitting}>
-                      Create collection
+                      {t('Create collection')}
                     </button>
                   </div>
                 </Form>

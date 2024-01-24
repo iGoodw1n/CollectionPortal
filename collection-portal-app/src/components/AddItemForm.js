@@ -9,9 +9,11 @@ import MyDateInput from './formComponents/MyDateInput';
 import toast, { Toaster } from 'react-hot-toast';
 import apiService from '../services/apiService';
 import MyTagSelect from './formComponents/myTagSelect/MyTagSelect';
+import { useTranslation } from 'react-i18next';
 
 const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
   const [tags, setTags] = useState([])
+  const { t } = useTranslation();
   const getInitialValues = () => {
     const initialValues = {}
     Object.keys(fieldNames).forEach(element => {
@@ -63,7 +65,7 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
           <Toaster />
           <Form >
             <div className='d-flex flex-wrap gap-3 justify-content-center align-items-start'>
-              <MyTextInput name='name' label='Enter name:' required />
+              <MyTextInput name='name' label={t('Enter name:')} required />
               {Object.entries(fieldNames).map(([fieldName, field], i) => {
                 const props = { required: true, name: fieldName, label: field.name }
                 switch (field.type) {
@@ -86,8 +88,8 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
               <MyTagSelect {...{ tags, setTags }} />
             </div>
             <div className='m-3'>
-              <button className='btn btn-primary mx-3' type="submit" disabled={isSubmitting}>Add Item</button>
-              <button className='btn btn-secondary' onClick={onCancelHandle}>Cancel</button>
+              <button className='btn btn-primary mx-3' type="submit" disabled={isSubmitting}>{t('Add Item')}</button>
+              <button className='btn btn-secondary' onClick={onCancelHandle}>{t('Cancel')}</button>
             </div>
           </Form>
         </>

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Button, Container, InputGroup, Form } from 'react-bootstrap'
 import { useAuth } from '../hooks/AuthProvider'
 import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
 const ItemPage = () => {
   const [item, setItem] = useState(null)
@@ -12,7 +13,7 @@ const ItemPage = () => {
   const [queryParams, setQueryParams] = useState({})
   const [text, setText] = useState('')
   const { id } = useParams()
-
+  const { t } = useTranslation()
   const auth = useAuth()
 
   const deleteComment = (id) => {
@@ -20,7 +21,7 @@ const ItemPage = () => {
       .then(res => {
         if (res) {
           toast.success("Successfully deleted comment")
-          setQueryParams(prev => ({...prev}))
+          setQueryParams(prev => ({ ...prev }))
         } else {
           toast.error("Something went wrong. Try again")
         }
@@ -50,11 +51,11 @@ const ItemPage = () => {
   return (
     <Container>
       {item && <Item item={item} />}
-      <h2>Comments</h2>
+      <h2>{t('Comments')}</h2>
       {auth.authData &&
         <InputGroup className="mb-3">
           <Button variant="success" onClick={addComment}>
-            Add comment
+            {t('Add comment')}
           </Button>
           <Form.Control
             value={text}
@@ -72,7 +73,7 @@ const ItemPage = () => {
               <figcaption className="blockquote-footer">
                 {comment.userName}
               </figcaption>
-              {(auth.isAdmin || +auth.authData.id === comment.userId) && <Button onClick={() => deleteComment(comment.id)} variant='danger'>Delete</Button>}
+              {(auth.isAdmin || +auth.authData.id === comment.userId) && <Button onClick={() => deleteComment(comment.id)} variant='danger'>{t('Delete')}</Button>}
             </figure>
           </li>
         ))}

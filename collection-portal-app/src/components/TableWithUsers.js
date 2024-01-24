@@ -3,12 +3,14 @@ import { Button, Table } from 'react-bootstrap'
 import apiService from '../services/apiService'
 import toast, { Toaster } from 'react-hot-toast'
 import { useAuth } from '../hooks/AuthProvider'
+import { useTranslation } from 'react-i18next'
 
 const TableWithUsers = () => {
   const [users, setUsers] = useState([])
   const [params, setParams] = useState({})
   const [checkedUsers, setCheckedUsers] = useState([])
   const auth = useAuth()
+  const { t } = useTranslation()
 
   useEffect(() => {
     apiService.getAllUsers()
@@ -88,7 +90,7 @@ const TableWithUsers = () => {
           toast.success("Users are successfully removed from admin")
           setCheckedUsers([])
           if (users.includes(auth.authData)) {
-            auth.setAuthData(prev => ({...prev, isAdmin: false}))
+            auth.setAuthData(prev => ({ ...prev, isAdmin: false }))
           }
           setParams(prev => ({ ...prev }))
         } else {
@@ -117,11 +119,11 @@ const TableWithUsers = () => {
     <>
       <Toaster />
       <div>
-        <Button variant='warning' onClick={blockUsers}>Block</Button>{' '}
-        <Button variant='success' onClick={unblockUsers}>Unblock</Button>{' '}
-        <Button variant='info' onClick={setAdmin}>Give admin</Button>{' '}
-        <Button variant='secondary' onClick={removeAdmin}>Revoke admin</Button>{' '}
-        <Button variant='danger' onClick={deleteUsers}>Delete</Button>
+        <Button variant='warning' onClick={blockUsers}>{t('Block')}</Button>{' '}
+        <Button variant='success' onClick={unblockUsers}>{t('Unblock')}</Button>{' '}
+        <Button variant='info' onClick={setAdmin}>{t('Give admin')}</Button>{' '}
+        <Button variant='secondary' onClick={removeAdmin}>{t('Revoke admin')}</Button>{' '}
+        <Button variant='danger' onClick={deleteUsers}>{t('Delete')}</Button>
       </div>
       <Table responsive hover>
         <thead>
@@ -134,9 +136,9 @@ const TableWithUsers = () => {
                 className="form-check-input"
               />
             </th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Status</th>
+            <th>{t('Email')}</th>
+            <th>{t('Role')}</th>
+            <th>{t('Status')}</th>
           </tr>
         </thead>
         <tbody>

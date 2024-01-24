@@ -1,18 +1,20 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { FIELD_TYPE_CHECKBOX } from '../constants';
+import { useTranslation } from 'react-i18next';
 
 const TableView = ({ items, customFields }) => {
+  const { t } = useTranslation();
   return (
     <Table responsive="md">
       <thead>
         <tr>
           <th>
-            Name
+            {t('Name')}
           </th>
           {Object.values(customFields).map(field => (<th>{field.name}</th>))}
           <th>
-            Tags
+            {t('Tags')}
           </th>
         </tr>
       </thead>
