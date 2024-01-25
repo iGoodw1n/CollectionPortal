@@ -16,7 +16,7 @@ const Collection = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [showAddForm, setShowAddForm] = useState(false)
   const [customFields, setCustomFields] = useState({})
-  const [item, setItem] = useState();
+  const [item, setItem] = useState({});
   const { id } = useParams()
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -80,7 +80,7 @@ const Collection = () => {
           </div>
           {showAddForm &&
             <>
-              <AddItemForm item={item} fieldNames={customFields} collectionId={id} onCancelHandle={() => setShowAddForm(false)} />
+              <AddItemForm item={item} fieldNames={customFields} collectionId={id} onCancelHandle={() => {setShowAddForm(false); setItem({})}} />
             </>}
           
           {collecion.paginatedItems &&

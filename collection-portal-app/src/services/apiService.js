@@ -216,10 +216,20 @@ export class ApiService {
 
   async deleteCollection(id) {
   try {
-    const result = await instance.delete(`api/comments/${id}`)
+    const result = await instance.delete(`api/collection/${id}`)
     return result.status === 204
   } catch (error) {
-    console.log("APIService :: deleteComment() :: ", error)
+    console.log("APIService :: deleteCollection() :: ", error)
+  }
+  return false
+}
+
+async deleteItem(id) {
+  try {
+    const result = await instance.delete(`api/items/${id}`)
+    return result.status === 204
+  } catch (error) {
+    console.log("APIService :: deleteItem() :: ", error)
   }
   return false
 }

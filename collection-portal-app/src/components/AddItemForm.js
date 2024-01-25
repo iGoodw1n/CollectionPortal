@@ -74,7 +74,7 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item = {} }) =>
                   case FIELD_TYPE_TEXT:
                     const ref = createRef()
                     refs[fieldName] = ref
-                    return <MarkdownEditor innerRef={ref} key={i} {...props} text={item[fieldName]} />
+                    return <MarkdownEditor innerRef={ref} key={i} {...props} text={item[fieldName] ?? ''} />
                   case FIELD_TYPE_NUMBER:
                     return <MyNumberInput key={i} {...props} />
                   case FIELD_TYPE_DATE:
