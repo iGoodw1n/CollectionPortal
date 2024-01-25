@@ -11,5 +11,13 @@ public interface IItemService
 
     Task<Item> GetItem(int id);
 
-    public Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams);
+    Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams);
+
+    Task Update(ItemDto itemDto, int id, int userId);
+
+    Task UpdateWithAdminRole(ItemDto itemDto, int id);
+
+    Task Delete(int id, int userId);
+
+    Task DeleteWithAdminRole(int id);
 }

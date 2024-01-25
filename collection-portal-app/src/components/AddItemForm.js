@@ -11,18 +11,18 @@ import apiService from '../services/apiService';
 import MyTagSelect from './formComponents/myTagSelect/MyTagSelect';
 import { useTranslation } from 'react-i18next';
 
-const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
+const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item }) => {
   const [tags, setTags] = useState([])
   const { t } = useTranslation();
   const getInitialValues = () => {
     const initialValues = {}
     Object.keys(fieldNames).forEach(element => {
-      initialValues[element] = ''
+      initialValues[element] = item[element]
     })
     return initialValues
   }
   const refs = {}
-
+  console.log("Item", item);
   const checkMarkupFields = () => {
     for (const ref of Object.values(refs)) {
       if (!ref?.current.getMarkdown()) {
@@ -46,7 +46,7 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
   }
   return (
     <Formik
-      initialValues={{ ...getInitialValues(), name: '' }}
+      initialValues={{ ...getInitialValues(), name: item.name ?? '' }}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         if (checkMarkupFields()) {
           const data = { ...values, ...getDataFromMarkdownFields(), collectionId, tagIds: tags.map(tag => (tag.value)) }
@@ -67,14 +67,14 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle }) => {
             <div className='d-flex flex-wrap gap-3 justify-content-center align-items-start'>
               <MyTextInput name='name' label={t('Enter name:')} required />
               {Object.entries(fieldNames).map(([fieldName, field], i) => {
-                const props = { required: true, name: fieldName, label: field.name }
+                const props = { required: true, name: fieldName, label: field.name, value: item[fieldName] }
                 switch (field.type) {
                   case FIELD_TYPE_STRING:
                     return <MyTextInput key={i} {...props} />
                   case FIELD_TYPE_TEXT:
                     const ref = createRef()
                     refs[fieldName] = ref
-                    return <MarkdownEditor innerRef={ref} key={i} {...props} text='' />
+                    return <MarkdownEditor innerRef={ref} key={i} {...props} text={item[fieldName]} />
                   case FIELD_TYPE_NUMBER:
                     return <MyNumberInput key={i} {...props} />
                   case FIELD_TYPE_DATE:

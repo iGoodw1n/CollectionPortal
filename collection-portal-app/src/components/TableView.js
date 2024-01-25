@@ -2,8 +2,9 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import { FIELD_TYPE_CHECKBOX } from '../constants';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../hooks/AuthProvider';
 
-const TableView = ({ items, customFields }) => {
+const TableView = ({ items, customFields, editItem, deleteItem, showButtons }) => {
   const { t } = useTranslation();
   return (
     <Table responsive="md">
@@ -19,7 +20,7 @@ const TableView = ({ items, customFields }) => {
         </tr>
       </thead>
       <tbody>
-        {items.map(item => (
+        {items.map((item, i) => (
           <tr>
             <td>
               {item.name}
@@ -33,6 +34,14 @@ const TableView = ({ items, customFields }) => {
             })}
             <td>
               {item.tags.map(tag => tag.name).join(', ')}
+            </td>
+            <td>
+            {showButtons &&
+                <>
+                  <button className='btn btn-primary btn-sm' onClick={() => editItem(i)}>{t('Edit Item')}</button>
+                  <button className='btn btn-danger btn-sm' onClick={() => deleteItem(i)}>{t('Delete Item')}</button>
+                </>
+              }
             </td>
           </tr>
         ))}

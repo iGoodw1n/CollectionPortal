@@ -22,6 +22,11 @@ internal class CollectionRepository : ICollectionRepository
         _context.Collections.Add(collection);
     }
 
+    public void Delete(Collection collection)
+    {
+        _context.Collections.Remove(collection);
+    }
+
     public async Task<Collection?> Get(int id)
     {
         return await  _context.Collections.FindAsync(id);

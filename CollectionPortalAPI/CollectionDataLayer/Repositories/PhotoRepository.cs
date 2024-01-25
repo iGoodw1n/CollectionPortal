@@ -16,4 +16,9 @@ internal class PhotoRepository : IPhotoRepository
     {
         _context.Photos.Add(photo);
     }
+
+    public async Task<Photo?> GetPhoto(int photoId)
+    {
+        return await _context.Photos.FindAsync(photoId);
+    }
 }

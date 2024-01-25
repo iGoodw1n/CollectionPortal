@@ -16,6 +16,11 @@ internal class ItemRepository : IItemRepository
         _context = context;
     }
 
+    public void Delete(Item item)
+    {
+        _context.Items.Remove(item);
+    }
+
     public async Task<Item?> Get(int id)
     {
         return await _context.Items.Include(i => i.Collection).Include(i => i.Tags).FirstOrDefaultAsync(i => i.Id == id);
@@ -28,6 +33,11 @@ internal class ItemRepository : IItemRepository
                 .ThenInclude(c => c.User)
             .OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
         return GetQuery(query, queryParams);
+    }
+
+    public void Update(Item current, Item updated)
+    {
+        _context.Entry(current).CurrentValues.SetValues(updated);
     }
 
     private async Task<QueryResultWithCount<Item>> GetQuery(IQueryable<Item> query, QueryParams queryParams)

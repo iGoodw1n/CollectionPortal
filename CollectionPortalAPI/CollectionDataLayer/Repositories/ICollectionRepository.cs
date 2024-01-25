@@ -16,4 +16,6 @@ public interface ICollectionRepository
     Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams, Expression<Func<Collection, bool>> filter);
 
     Task<QueryResultForCollectionWithCount> GetCollectionWithItems(int id, QueryParams queryParams);
+
+    void Delete(Collection collection);
 }

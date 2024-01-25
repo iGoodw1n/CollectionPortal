@@ -37,6 +37,51 @@ internal class ItemService : IItemService
         return item;
     }
 
+    public async Task Update(ItemDto itemDto, int id, int userId)
+    {
+        var item = await GetItem(id);
+        if (item.Collection.UserId != userId)
+        {
+            throw new ForbiddenAccessException();
+        }
+        await UpdateItem(itemDto, item);
+    }
+
+    public async Task UpdateWithAdminRole(ItemDto itemDto, int id)
+    {
+        var item = await GetItem(id);
+        await UpdateItem(itemDto, item);
+    }
+
+    private async Task UpdateItem(ItemDto itemDto, Item item)
+    {
+        var updatedItem = _mapper.Map<Item>(itemDto);
+        _unitOfWork.Items.Update(item, updatedItem);
+        await SaveChanges();
+    }
+
+    public async Task Delete(int id, int userId)
+    {
+        var item = await GetItem(id);
+        if (item.Collection.UserId != userId)
+        {
+            throw new ForbiddenAccessException();
+        }
+        await DeleteItem(item);
+    }
+
+    public async Task DeleteWithAdminRole(int id)
+    {
+        var item = await GetItem(id);
+        await DeleteItem(item);
+    }
+
+    private async Task DeleteItem(Item item)
+    {
+        _unitOfWork.Items.Delete(item);
+        await SaveChanges();
+    }
+
     private async Task<Collection> GetCollection(ItemDto itemDto)
     {
         return await _unitOfWork.Collections.Get(itemDto.CollectionId)

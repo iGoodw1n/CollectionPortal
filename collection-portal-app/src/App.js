@@ -13,9 +13,10 @@ import Collections from './components/Collections';
 import CollectionPage from './pages/CollectionPage';
 import AdminPage from './pages/AdminPage';
 import ItemPage from './pages/ItemPage';
+import EditCollection from './pages/EditCollection';
 
 function App() {
-  
+
   return (
     <Router>
       <ThemeContextProvider>
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="edit/collection/:id" element={<EditCollection />} />
             <Route path="dashboard" element={<PrivateRoute><MyCollection /></PrivateRoute>} />
             <Route path="collections" element={<Collections />} />
             <Route path="collection/:id" element={<CollectionPage />} />

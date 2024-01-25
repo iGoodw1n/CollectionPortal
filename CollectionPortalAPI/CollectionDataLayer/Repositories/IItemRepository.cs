@@ -9,4 +9,8 @@ public interface IItemRepository
     Task<Item?> Get(int id);
 
     Task<QueryResultWithCount<Item>> GetAll(QueryParams queryParams);
+
+    void Delete(Item item);
+
+    void Update(Item currentm, Item updated);
 }
