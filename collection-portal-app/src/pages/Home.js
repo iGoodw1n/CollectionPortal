@@ -12,7 +12,7 @@ const Home = () => {
       <h2>{t('Tags cloud')}</h2>
       <MyTagCloud />
       <h2>{t('Biggest collections')}</h2>
-      <Collections pagesize={5} orderBy='items.count' orderType='desc' />
+      <Collections pagesize={5} orderBy='items.count' orderType='desc' showPages={false} />
       <h2>{t('Last added items')}</h2>
       <Items pagesize={5} orderBy='creationdate' orderType='desc' />
     </Container>

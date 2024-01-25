@@ -39,7 +39,7 @@ const TableView = ({ items, customFields, editItem, deleteItem, showButtons }) =
             {showButtons &&
                 <>
                   <button className='btn btn-primary btn-sm' onClick={() => editItem(i)}>{t('Edit Item')}</button>
-                  <button className='btn btn-danger btn-sm' onClick={() => deleteItem(i)}>{t('Delete Item')}</button>
+                  <button className='btn btn-danger btn-sm' onClick={() => deleteItem(item.id)}>{t('Delete Item')}</button>
                 </>
               }
             </td>

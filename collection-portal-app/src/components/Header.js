@@ -30,10 +30,9 @@ const Header = () => {
             <Nav className="me-auto">
               <Nav.Link eventKey='1' as={NavLink} aria-current="page" to="/">{t('Home')}</Nav.Link>
               <Nav.Link eventKey='2' as={NavLink} to="/collections">{t('Collections')}</Nav.Link>
-              <Nav.Link eventKey='4' as={NavLink} to="/items">{t('Items')}</Nav.Link>
               {auth.authData
                 ? <>
-                  <Nav.Link eventKey='6' as={NavLink} to="/mypage">{t('My Collections')}</Nav.Link>
+                  <Nav.Link eventKey='4' as={NavLink} to="/dashboard">{t('My Collections')}</Nav.Link>
                   <Nav.Link eventKey='3' as={NavLink} to="/collection/new">{t('Create Collection')}</Nav.Link>
                   {auth.authData.isAdmin && <Nav.Link eventKey='8' as={NavLink} to="/admin">{t('Admin Panel')}</Nav.Link>}
                   <NavDropdown title={auth.authData.userName}>

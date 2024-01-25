@@ -8,12 +8,12 @@ import Signup from './pages/Signup';
 import AuthProvider from './hooks/AuthProvider';
 import AddCollection from './pages/AddCollection';
 import ThemeContextProvider from './contexts/ThemeContextProvider';
-import MyCollection from './pages/MyCollection';
 import Collections from './components/Collections';
 import CollectionPage from './pages/CollectionPage';
 import AdminPage from './pages/AdminPage';
 import ItemPage from './pages/ItemPage';
 import EditCollection from './pages/EditCollection';
+import MyCollections from './pages/MyCollections';
 
 function App() {
 
@@ -27,12 +27,14 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="edit/collection/:id" element={<EditCollection />} />
-            <Route path="dashboard" element={<PrivateRoute><MyCollection /></PrivateRoute>} />
+            <Route element={<PrivateRoute />} >
+              <Route path="dashboard" element={<MyCollections />} />
+            </Route>
             <Route path="collections" element={<Collections />} />
             <Route path="collection/:id" element={<CollectionPage />} />
             <Route path="item/:id" element={<ItemPage />} />
             <Route path="collection/new" element={<AddCollection />} />
-            <Route element={<PrivateRoute admin={true}/>} >
+            <Route element={<PrivateRoute admin={true} />} >
               <Route path="admin" element={<AdminPage />} />
             </Route>
             {/* Other routes */}

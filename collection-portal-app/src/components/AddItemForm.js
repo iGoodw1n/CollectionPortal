@@ -11,7 +11,7 @@ import apiService from '../services/apiService';
 import MyTagSelect from './formComponents/myTagSelect/MyTagSelect';
 import { useTranslation } from 'react-i18next';
 
-const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item }) => {
+const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item = {} }) => {
   const [tags, setTags] = useState([])
   const { t } = useTranslation();
   const getInitialValues = () => {
