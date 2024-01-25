@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next';
 
 const Item = ({ item }) => {
   const { t } = useTranslation();
-  const fieldNames = useCallback(
+  const getFieldNames = useCallback(
     () => {
-      getFieldWithNames(item.collection)
+      return getFieldWithNames(item.collection)
     },
     [item],
   )
   
+  const fieldNames = getFieldNames()
   return (
     <Card >
       <Card.Body>

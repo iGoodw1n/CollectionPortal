@@ -43,6 +43,17 @@ const ItemPage = () => {
   }, [id])
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      apiService.getAllCommentsByItem(id, queryParams)
+        .then(res => {
+          setComments(res.items)
+        })
+    }, 3000)
+    return () => clearInterval(intervalId)
+    // eslint-disable-next-line
+  }, [])
+
+  useEffect(() => {
     apiService.getAllCommentsByItem(id, queryParams)
       .then(res => {
         setComments(res.items)
