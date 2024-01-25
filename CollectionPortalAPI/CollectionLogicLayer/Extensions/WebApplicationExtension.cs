@@ -1,4 +1,5 @@
-﻿using API.Services;
+﻿using Algolia.Search.Clients;
+using API.Services;
 using CollectionLogicLayer.Helpers;
 using CollectionLogicLayer.Services;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ public static class WebApplicationExtension
 {
     public static IServiceCollection AddLogicServices(this IServiceCollection services, IConfiguration config)
     {
+        services.AddSingleton<ISearchClient>(new SearchClient(config["Algolia:AppID"], config["Algolia:ApiKey"]));
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<ICollectionService, CollectionService>();

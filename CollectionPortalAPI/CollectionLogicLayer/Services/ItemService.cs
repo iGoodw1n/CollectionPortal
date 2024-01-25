@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿using Algolia.Search.Clients;
+using AutoMapper;
 using CollectionDataLayer.DTOs;
 using CollectionDataLayer.Entities;
 using CollectionDataLayer.Exceptions;
 using CollectionDataLayer.Repositories;
+using CollectionLogicLayer.Consts;
 using CollectionLogicLayer.DTOs;
 using CollectionLogicLayer.Helpers;
 
@@ -12,17 +14,20 @@ internal class ItemService : IItemService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ISearchClient _searchClient;
 
-    public ItemService(IUnitOfWork unitOfWork, IMapper mapper)
+    public ItemService(IUnitOfWork unitOfWork, IMapper mapper, ISearchClient searchClient)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _searchClient = searchClient;
     }
     public async Task AddItem(ItemDto itemDto)
     {
         var collection = await GetCollection(itemDto);
-        await AddItemToCollection(itemDto, collection);
-        await SaveChanges();
+        var item = await AddItemToCollection(itemDto, collection);
+        var searchIndex = _searchClient.InitIndex(Names.INDEX);
+        await searchIndex.SaveObjectAsync(item);
     }
 
     public Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams)
@@ -88,10 +93,12 @@ internal class ItemService : IItemService
                     ?? throw new NotFoundException($"Collection with id {itemDto.CollectionId} not found");
     }
 
-    private async Task AddItemToCollection(ItemDto itemDto, Collection collection)
+    private async Task<Item> AddItemToCollection(ItemDto itemDto, Collection collection)
     {
         Item item = await CreateItem(itemDto);
         collection.Items.Add(item);
+        await SaveChanges();
+        return item;
     }
 
     private async Task<Item> CreateItem(ItemDto itemDto)
