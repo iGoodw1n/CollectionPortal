@@ -57,6 +57,13 @@ public class ItemsController : ControllerBase
         return Ok(items);
     }
 
+    [HttpGet("bycollection/{id}")]
+    public async Task<IActionResult> GetByCollection([FromQuery] PaginationParams paginationParams, int id)
+    {
+        var items = await _itemService.GetItemsByCollection(paginationParams, id);
+        return Ok(items);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {

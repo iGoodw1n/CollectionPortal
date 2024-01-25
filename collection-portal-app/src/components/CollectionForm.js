@@ -41,7 +41,6 @@ const CollectionForm = () => {
     apiService.getAllCategories()
       .then(categories => {
         if (categories) {
-          console.log(categories);
           setCategories(categories)
         }
       })
@@ -67,7 +66,6 @@ const CollectionForm = () => {
             validationSchema={validationForCollection}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
               const description = ref?.current.getMarkdown()
-              await console.log({ ...values, customFields, description })
               const success = await apiService.addCollection({ ...values, description, ...customFields })
               toast(success ? "Successfully create new collection" : "There is some error. Try again")
               success && resetData(resetForm)

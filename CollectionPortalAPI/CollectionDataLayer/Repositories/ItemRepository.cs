@@ -35,6 +35,15 @@ internal class ItemRepository : IItemRepository
         return GetQuery(query, queryParams);
     }
 
+    public Task<QueryResultWithCount<Item>> GetAllByCollection(QueryParams queryParams, int collectionId)
+    {
+        Console.WriteLine("Collection Id: " + collectionId);
+        var query = _context.Items
+            .Where(i => i.CollectionId == collectionId)
+            .OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
+        return GetQuery(query, queryParams);
+    }
+
     public void Update(Item current, Item updated)
     {
         _context.Entry(current).CurrentValues.SetValues(updated);
@@ -42,8 +51,10 @@ internal class ItemRepository : IItemRepository
 
     private async Task<QueryResultWithCount<Item>> GetQuery(IQueryable<Item> query, QueryParams queryParams)
     {
+        Console.WriteLine("Items For Collection");
         var count = await query.CountAsync();
         var items = await query.Skip(queryParams.Skip).Take(queryParams.Take).ToListAsync();
+        Console.WriteLine(items.Count);
         return new QueryResultWithCount<Item> { TotalCount = count, Entities = items };
     }
 }

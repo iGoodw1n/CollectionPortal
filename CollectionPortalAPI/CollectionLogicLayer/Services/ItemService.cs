@@ -14,20 +14,18 @@ internal class ItemService : IItemService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly ISearchClient _searchClient;
 
-    public ItemService(IUnitOfWork unitOfWork, IMapper mapper, ISearchClient searchClient)
+    public ItemService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _searchClient = searchClient;
     }
     public async Task AddItem(ItemDto itemDto)
     {
         var collection = await GetCollection(itemDto);
         var item = await AddItemToCollection(itemDto, collection);
-        var searchIndex = _searchClient.InitIndex(Names.INDEX);
-        await searchIndex.SaveObjectAsync(item);
+        //var searchIndex = _searchClient.InitIndex(Names.INDEX);
+        //await searchIndex.SaveObjectAsync(item);
     }
 
     public Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams)
@@ -119,5 +117,12 @@ internal class ItemService : IItemService
     private async Task SaveChanges()
     {
         await _unitOfWork.CompleteAsync();
+    }
+
+    public async Task<PagedList<Item>> GetItemsByCollection(PaginationParams paginationParams, int collectionId)
+    {
+        var queryParams = ParamsHelper.ConvertPaginationParamsToQuery(paginationParams);
+        var items = await _unitOfWork.Items.GetAllByCollection(queryParams, collectionId);
+        return new(items.Entities, items.TotalCount, paginationParams.PageNumber, paginationParams.PageSize);
     }
 }

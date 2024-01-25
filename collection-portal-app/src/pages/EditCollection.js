@@ -9,7 +9,6 @@ const EditCollection = () => {
   useEffect(() => {
     apiService.getCollectionForEdit(id)
       .then(res => {
-        console.log(res);
         setData(res)
       })
   })

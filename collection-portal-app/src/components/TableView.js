@@ -13,7 +13,7 @@ const TableView = ({ items, customFields, editItem, deleteItem, showButtons }) =
           <th>
             {t('Name')}
           </th>
-          {Object.values(customFields).map(field => (<th>{field.name}</th>))}
+          {Object.values(customFields).map((field, i) => (<th key={i}>{field.name}</th>))}
           <th>
             {t('Tags')}
           </th>
@@ -21,15 +21,15 @@ const TableView = ({ items, customFields, editItem, deleteItem, showButtons }) =
       </thead>
       <tbody>
         {items.map((item, i) => (
-          <tr>
+          <tr key={i}>
             <td>
               {item.name}
             </td>
             {Object.keys(customFields).map(field => {
               if (customFields[field].type === FIELD_TYPE_CHECKBOX) {
-                return <td><input type='checkbox' className='form-check-input' checked={item[field]} disabled /></td>
+                return <td key={field}><input type='checkbox' className='form-check-input' checked={item[field]} disabled /></td>
               } else {
-                return <td>{item[field]}</td>
+                return <td key={field}>{item[field]}</td>
               }
             })}
             <td>

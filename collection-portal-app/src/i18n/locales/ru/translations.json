@@ -60,5 +60,8 @@
   "English": "Английский",
   "Russian": "Русский",
   "Update collection": "Обновить коллекцию",
-  "MyCollections": "Мои коллекции"
+  "MyCollections": "Мои коллекции",
+  "Sorting by:": "Сортировать по",
+  "Order:": "Порядок сортировки",
+  "Descending": "По убыванию"
 }

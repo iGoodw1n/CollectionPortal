@@ -12,7 +12,7 @@ public static class WebApplicationExtension
 {
     public static IServiceCollection AddLogicServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSingleton<ISearchClient>(new SearchClient(config["Algolia:AppID"], config["Algolia:ApiKey"]));
+        //services.AddSingleton<ISearchClient>(new SearchClient(config["Algolia:AppID"], config["Algolia:ApiKey"]));
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddScoped<ICollectionService, CollectionService>();

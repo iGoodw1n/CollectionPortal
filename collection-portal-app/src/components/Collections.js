@@ -11,7 +11,6 @@ const Collections = ({ pagesize, orderBy, orderType, userId, showPages = true })
     apiService
       .getAllCollections({ ...params, userId })
       .then(res => {
-        console.log(res)
         setCollecectionsData(res)
       })
   }, [params, userId])

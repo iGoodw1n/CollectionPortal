@@ -29,7 +29,7 @@ internal class CollectionRepository : ICollectionRepository
 
     public async Task<Collection?> Get(int id)
     {
-        return await  _context.Collections.FindAsync(id);
+        return await  CreateQuery().FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public Task<QueryResultWithCount<Collection>> GetAll(QueryParams queryParams)

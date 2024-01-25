@@ -18,7 +18,6 @@ const MyTagSelect = ({ tags, setTags }) => {
   useEffect(() => {
     apiService.getAllTags()
       .then(res => {
-        console.log(res);
         handleResult(res)
       })
       .catch(err => console.log(err))
@@ -36,7 +35,6 @@ const MyTagSelect = ({ tags, setTags }) => {
   };
 
   const onChangeHandle = (newValue) => {
-    console.log("New Value", newValue);
     setTags(newValue)
   }
 

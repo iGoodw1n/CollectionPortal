@@ -10,6 +10,8 @@ public interface IItemRepository
 
     Task<QueryResultWithCount<Item>> GetAll(QueryParams queryParams);
 
+    Task<QueryResultWithCount<Item>> GetAllByCollection(QueryParams queryParams, int collectionId);
+
     void Delete(Item item);
 
     void Update(Item currentm, Item updated);

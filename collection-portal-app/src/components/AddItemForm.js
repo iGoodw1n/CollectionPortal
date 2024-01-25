@@ -22,7 +22,6 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item = {} }) =>
     return initialValues
   }
   const refs = {}
-  console.log("Item", item);
   const checkMarkupFields = () => {
     for (const ref of Object.values(refs)) {
       if (!ref?.current.getMarkdown()) {
@@ -50,7 +49,6 @@ const AddItemForm = ({ fieldNames, collectionId, onCancelHandle, item = {} }) =>
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         if (checkMarkupFields()) {
           const data = { ...values, ...getDataFromMarkdownFields(), collectionId, tagIds: tags.map(tag => (tag.value)) }
-          console.log(data)
           const success = await apiService.addItem(data)
           toast(success ? "Successfully create new item" : "There is some error. Try again")
           success && resetData(resetForm)

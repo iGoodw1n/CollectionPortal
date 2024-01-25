@@ -12,7 +12,6 @@ const AuthProvider = ({ children }) => {
   const loginAction = async (data) => {
     try {
       const response = await instance.post("/account/login", data);
-      console.log(response)
       if (response) {
         if (response.status === 401) return 'Password or email is incorrect'
         localStorage.setItem("token", response.data.accessToken)
@@ -66,7 +65,6 @@ const AuthProvider = ({ children }) => {
   const getUserData = async () => {
     try {
       const result = await instance.get('/api/account/check')
-      console.log("UserStatus", result);
       if (result.status === 200) {
         if (JSON.stringify(result.data) !== JSON.stringify(authData)) {
           setAuthData(result.data)
@@ -81,7 +79,6 @@ const AuthProvider = ({ children }) => {
   }
 
   const logOut = () => {
-    console.log("CLear interval");
     setAuthData(null);
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");

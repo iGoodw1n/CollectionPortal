@@ -13,6 +13,8 @@ public interface IItemService
 
     Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams);
 
+    Task<PagedList<Item>> GetItemsByCollection(PaginationParams paginationParams, int collectionId);
+
     Task Update(ItemDto itemDto, int id, int userId);
 
     Task UpdateWithAdminRole(ItemDto itemDto, int id);

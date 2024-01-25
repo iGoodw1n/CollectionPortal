@@ -9,7 +9,6 @@ const Items = ({ pagesize, orderBy, orderType }) => {
     apiService
       .getAllItems({ pagesize, orderBy, orderType })
       .then(res => {
-        console.log(res);
         setItems(res.entities)
       })
   }, [])

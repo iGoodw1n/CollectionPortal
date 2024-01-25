@@ -13,7 +13,7 @@ import { useAuth } from '../hooks/AuthProvider'
 const Collection = () => {
   const [params, setParams] = useState({})
   const [collecion, setCollection] = useState()
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [items, setItems] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
   const [customFields, setCustomFields] = useState({})
   const [item, setItem] = useState({});
@@ -42,21 +42,33 @@ const Collection = () => {
 
   useEffect(() => {
     if (id) {
-      console.log(id);
-      apiService.getCollection(id, params)
+      apiService.getCollection(id)
         .then(res => {
           if (res) {
             setCustomFields(getFieldWithNames(res))
             setCollection(res)
           }
-          console.log(res);
         })
     }
-  }, [id, params, showAddForm])
+  }, [id])
+
+  useEffect(() => {
+    if (id) {
+      apiService.getItemsByCollection(id, params)
+        .then(res => {
+          if (res) {
+            setItems(res)
+          }
+        })
+    }
+  }, [params, showAddForm])
 
   const updateParams = (page) => {
-    console.log(page);
     setParams(prev => ({ ...prev, pageNumber: page }))
+  }
+
+  const capitalize = (text) => {
+    return text.slice(0, 1).toUpperCase() + text.slice(1)
   }
   return (
     <Container >
@@ -80,21 +92,41 @@ const Collection = () => {
           </div>
           {showAddForm &&
             <>
-              <AddItemForm item={item} fieldNames={customFields} collectionId={id} onCancelHandle={() => {setShowAddForm(false); setItem({})}} />
+              <AddItemForm item={item} fieldNames={customFields} collectionId={id} onCancelHandle={() => { setShowAddForm(false); setItem({}) }} />
             </>}
-          
-          {collecion.paginatedItems &&
+          {items &&
             <>
+              <div className='d-flex mt-3 gap-3'>
+                <h3>{t('Sorting by:')}</h3>
+                <div>
+                  <select className="form-select" onChange={(e) => setParams(prev => ({ ...prev, orderBy: capitalize(e.target.value) }))}>
+                    <option hidden value=''></option>
+                    <option value='name'>{t('Name')}</option>
+                    {Object.entries(customFields).map(([field, fieldData], i) => (
+                      <option key={i} value={field}>{fieldData.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <h3>{t('Order:')}</h3>
+                <div>
+                  <select className="form-select" onChange={(e) => setParams(prev => ({ ...prev, orderType: e.target.value }))}>
+                    <option hidden value=''></option>
+                    <option value='asc'>{t('Ascending')}</option>
+                    <option value='desc'>{t('Descending')}</option>
+                  </select>
+                </div>
+              </div>
               <TableView
-                items={collecion.paginatedItems.items}
+                items={items.items}
                 customFields={customFields}
                 showButtons={showButtons}
                 editItem={editItem}
                 deleteItem={deleteItem}
               />
-              {collecion.paginatedItems.totalPages > 1 && <MyPagination
-                pages={collecion.paginatedItems.totalPages}
-                active={collecion.paginatedItems.currentPage}
+              {items.totalPages > 1 && <MyPagination
+                pages={items.totalPages}
+                active={items.currentPage}
                 onClickHandle={updateParams}
               />}
             </>
