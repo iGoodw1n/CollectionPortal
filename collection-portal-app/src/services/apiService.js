@@ -127,6 +127,16 @@ export class ApiService {
     return false
   }
 
+  async getItemsByTag(id) {
+    try {
+      const result = await instance.get(`api/items/byTag/${id}`)
+      return result.data
+    } catch (error) {
+      console.log("APIService :: getItem() :: ", error)
+    }
+    return false
+  }
+
   async getAllCommentsByItem(id, params) {
     try {
       const result = await instance.get(`api/comments/byitem/${id}`, { params })

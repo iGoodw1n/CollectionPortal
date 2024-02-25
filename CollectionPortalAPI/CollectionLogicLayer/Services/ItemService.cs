@@ -125,4 +125,9 @@ internal class ItemService : IItemService
         var items = await _unitOfWork.Items.GetAllByCollection(queryParams, collectionId);
         return new(items.Entities, items.TotalCount, paginationParams.PageNumber, paginationParams.PageSize);
     }
+
+    public Task<List<Item>> GetItemsByTag(int id)
+    {
+        return _unitOfWork.Items.GetAll(i => i.Tags.Any(t => t.Id == id));
+    }
 }

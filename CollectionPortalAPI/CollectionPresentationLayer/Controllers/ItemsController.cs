@@ -71,6 +71,13 @@ public class ItemsController : ControllerBase
         return Ok(item);
     }
 
+    [HttpGet("byTag/{id}")]
+    public async Task<IActionResult> GetByTag(int id)
+    {
+        var item = await _itemService.GetItemsByTag(id);
+        return Ok(item);
+    }
+
     private async Task<IActionResult> UpdateAsUser(ItemDto itemDto, int id)
     {
         var userId = GetUserId();

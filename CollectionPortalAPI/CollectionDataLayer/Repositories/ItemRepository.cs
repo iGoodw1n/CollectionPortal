@@ -4,6 +4,7 @@ using CollectionDataLayer.Entities;
 using CollectionDataLayer.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace CollectionDataLayer.Repositories;
 
@@ -33,6 +34,11 @@ internal class ItemRepository : IItemRepository
                 .ThenInclude(c => c.User)
             .OrderBy($"{queryParams.OrderBy} {queryParams.OrderType}");
         return GetQuery(query, queryParams);
+    }
+
+    public Task<List<Item>> GetAll(Expression<Func<Item, bool>> filter)
+    {
+        return _context.Items.Where(filter).ToListAsync();
     }
 
     public Task<QueryResultWithCount<Item>> GetAllByCollection(QueryParams queryParams, int collectionId)

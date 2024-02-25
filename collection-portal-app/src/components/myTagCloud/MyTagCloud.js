@@ -26,7 +26,7 @@ const MyTagCloud = () => {
       minSize={12}
       maxSize={35}
       tags={tags}
-      onClick={tag => navigate(`/itemswithtag/:${tag.id}`)}
+      onClick={tag => navigate(`/itemswithtag/${tag.id}`)}
     />
   )
 }

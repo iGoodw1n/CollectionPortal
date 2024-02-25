@@ -11,6 +11,8 @@ public interface IItemService
 
     Task<Item> GetItem(int id);
 
+    Task<List<Item>> GetItemsByTag(int id);
+
     Task<QueryResultWithCount<Item>> GetItems(PaginationParams paginationParams);
 
     Task<PagedList<Item>> GetItemsByCollection(PaginationParams paginationParams, int collectionId);

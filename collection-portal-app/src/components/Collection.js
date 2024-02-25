@@ -17,13 +17,11 @@ const Collection = () => {
   const [showAddForm, setShowAddForm] = useState(false)
   const [customFields, setCustomFields] = useState({})
   const [item, setItem] = useState({});
+  const [showButtons, setShowButtons] = useState(false);
   const { id } = useParams()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const user = useAuth()
-
-
-  const showButtons = user.authData && (user.authData.isAdmin || +user.authData.id === +collecion.userId)
 
   const deleteCollection = () => {
     apiService.deleteCollection(collecion.id)
@@ -47,6 +45,9 @@ const Collection = () => {
           if (res) {
             setCustomFields(getFieldWithNames(res))
             setCollection(res)
+            console.log(res);
+            console.log(user.authData.id);
+            setShowButtons(user.authData && (user.authData.isAdmin || +user.authData.id === +res.userId))
           }
         })
     }
